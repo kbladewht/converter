@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WebUART</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+
+            margin: 0;
+            padding: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            height: 100vh;
+
+            color: #333;
+        }
+
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+
+        /* connect/send */
+
+        #connect,
+        #send {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+
+        }
+        #connect:hover,
+        #send:hover {
+            background-color: #45a049;
+        }
+
+        #log {
+
+            width: 80%;
+            max-width: 600px;
+            height: 200px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            resize: none;
+        }
+
+        #input {
+
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .preset-buttons {
+
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .cmd {
+            min-width: 90px;
+            height: 38px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cmd:hover {
+            opacity: 0.8;
+        }
+        .cmd-system {
+            background: #4CAF50;
+        }
+
+        .cmd-channel {
+            background: #2196F3;
+        }
+
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 5px #4CAF50;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1>WebUART</h1>
+
+    <button id="connect">
+        Connect UART
+    </button>
+
+    <textarea id="log" rows="10" readonly></textarea>
+
+    <div class="preset-buttons">
+
+        <button class="cmd cmd-system" data-cmd="help">
+            HELP
+        </button>
+
+        <button class="cmd cmd-system" data-cmd="reset">
+            RESET
+        </button>
+
+        <button class="cmd cmd-system" data-cmd="dfu">
+            DFU
+        </button>
+    </div>
+
+    <div class="preset-buttons">
+
+        <button class="cmd cmd-channel" data-cmd="channel 0">
+            USB
+        </button>
+
+        <button class="cmd cmd-channel" data-cmd="channel 1">
+            蓝牙1
+        </button>
+
+        <button class="cmd cmd-channel" data-cmd="channel 2">
+            蓝牙2
+        </button>
+
+        <button class="cmd cmd-channel" data-cmd="channel 3">
+            蓝牙3
+        </button>
+
+        <button class="cmd cmd-channel" data-cmd="channel 4">
+            2.4G
+        </button>
+
+        <button class="cmd cmd-channel" data-cmd="channel ota">
+            OTA
+        </button>
+        <button class="cmd cmd-channel" data-cmd="unpair">
+            删除配对
+        </button>
+
+    </div>
+    <input id="input" type="text" placeholder="Type your message">
+
+    <button id="send">
+        Send
+    </button>
+
+    <script>
+        let port = null;
+        let reader = null;
+        let writer = null;
+
+        let reconnectTimer = null;
+        let isConnecting = false;
+        let firstConnect = true;
+
+        const logElement = document.getElementById("log");
+        const connectBtn = document.getElementById("connect");
+        const sendButton = document.getElementById("send");
+        const inputE =  document.getElementById("input");
+        async function sendCommand(cmd) {
+
+            if (!writer) {
+                alert("Please connect first.");
+                return;
+            }
+            await writer.write(
+                new TextEncoder().encode(cmd + "\n")
+            );
+
+        }
+        async function readData() {
+
+            try {
+
+                while (true) {
+
+                    const { value, done } =
+                        await reader.read();
+
+                    if (done)
+                        break;
+
+                    logElement.value +=new TextDecoder().decode(value);
+
+                    logElement.scrollTop =logElement.scrollHeight;
+                }
+            }
+            catch (e) {
+                console.log("UART disconnected", e);
+                uartDisconnected();
+            }
+        }
+     
+        async function openUART(forceSelect=false)
+{
+    if(isConnecting)
+        return;
+
+
+    isConnecting=true;
+
+
+    try
+    {
+
+        if(forceSelect)
+        {
+            // 强制弹出选择框
+            port =
+                await navigator.serial.requestPort();
+        }
+        else
+        {
+            let ports =
+                await navigator.serial.getPorts();
+
+
+            if(ports.length > 0)
+            {
+                port=ports[0];
+            }
+            else
+            {
+                port =
+                    await navigator.serial.requestPort();
+            }
+        }
+
+
+
+        await port.open({
+            baudRate:115200
+        });
+
+
+
+        writer =
+            port.writable.getWriter();
+
+
+        reader =
+            port.readable.getReader();
+
+
+
+        connectBtn.innerText =
+            "UART Connected";
+
+
+        isConnecting=false;
+
+
+        readData();
+
+
+    }
+    catch(e)
+    {
+
+        console.log("open uart fail",e);
+
+
+        port=null;
+        reader=null;
+        writer=null;
+
+
+        isConnecting=false;
+
+    }
+
+}
+
+        function startReconnect() {
+
+            if (reconnectTimer)
+                return;
+
+            reconnectTimer = setInterval(async () => {
+
+                if (port) {
+                    clearInterval(reconnectTimer);
+                    reconnectTimer = null;
+                    return;
+                }
+                console.log("try reconnect");
+                await openUART();
+
+            }, 1000);
+        }
+
+        async function closeUART() {
+
+            try {
+                if (reader) {
+                    await reader.cancel();
+                    reader.releaseLock();
+                }
+                if (writer) {
+                    writer.releaseLock();
+                }
+                if (port) {
+                    await port.close();
+                }
+            }catch (e) {
+                console.log(e);
+            }
+
+            reader = null;
+            writer = null;
+            port = null;
+
+            connectBtn.innerText ="Connect UART";
+
+        }
+        async function uartDisconnected() {
+
+            try {
+
+                if (reader) {
+                    await reader.cancel();
+                    reader.releaseLock();
+                }
+
+                if (writer) {
+                    writer.releaseLock();
+                }
+            }
+            catch (e) {
+            }
+
+            reader = null;
+            writer = null;
+            port = null;
+            connectBtn.innerText = "Connect UART";
+            startReconnect();
+        }
+
+     connectBtn.onclick =
+        async function()
+        {   
+
+            if(port)
+            {
+                await closeUART();
+            }
+            else
+            {
+                await openUART(true);
+            }
+
+    };
+
+        sendButton.onclick =
+            async function () {
+                await sendCommand(inputE.value);
+                inputE.value = "";
+            };
+        document.querySelectorAll(".cmd")
+            .forEach(btn => {
+                btn.onclick =
+                    async function () {
+                        await sendCommand(
+                            btn.dataset.cmd
+                        );
+                    };
+            });
+
+
+        inputE.addEventListener(
+            "keydown",
+            function (event) {
+                if (event.key === "Enter") {
+                    sendButton.click();
+                }
+            });
+
+        window.onbeforeunload =
+            async function () {
+                await closeUART();
+            };
+
+        navigator.serial.addEventListener(
+            "disconnect",
+            event => {
+                if (event.target === port) {
+                    console.log("Device disconnected");
+                    uartDisconnected();
+                }
+            }
+        );
+
+        async function autoReconnect() {
+            if (port)
+                return;
+
+            try {
+                let ports = await navigator.serial.getPorts();
+
+                if (ports.length > 0) {
+                    console.log("Try reconnect UART");
+
+                    port = ports[0];
+                    await port.open({
+                        baudRate: 115200
+                    });
+
+
+                    writer = port.writable.getWriter();
+                    reader = port.readable.getReader();
+                    connectBtn.innerText = "UART Connected";
+
+                    readData();
+
+                    console.log("UART reconnect success");
+
+                    return;
+                }
+
+            }catch (e) {
+                console.log("Reconnect failed");
+            }
+            reconnectTimer =setTimeout(autoReconnect, 1000);
+
+        }
+    </script>
+
+</body>
+</html>

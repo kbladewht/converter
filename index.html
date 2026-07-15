@@ -112,12 +112,31 @@
             outline: none;
             box-shadow: 0 0 5px #4CAF50;
         }
+
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /* 原来是 center，改成 flex-start */
+    height: 100vh;
+    color: #333;
+}
     </style>
 
 </head>
 
 
-<body>
+<body >
+
+<!-- 导航栏 -->
+<div class="navbar" style="display: flex; justify-content: flex-start; background-color: #333; width: 100%;">
+    <a class="nav-item" href="shortcuts.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">⌨️ 键盘快捷键</a>
+    <a class="nav-item active" href="index.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; background-color: #4CAF50; border-bottom: 3px solid #2E7D32;">🔌 UART 命令</a>
+</div>
 
     <h1>WebUART</h1>
 
@@ -125,7 +144,7 @@
         Connect UART
     </button>
 
-    <textarea id="log" rows="10" readonly></textarea>
+    <textarea id="log" rows="10"></textarea>
 
     <div class="preset-buttons">
 
@@ -172,11 +191,7 @@
         </button>
 
     </div>
-    <input id="input" type="text" placeholder="Type your message">
 
-    <button id="send">
-        Send
-    </button>
 
     <script>
         let port = null;

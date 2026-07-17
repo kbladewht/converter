@@ -137,13 +137,29 @@
     <div style="margin-top: 30px; color: #aaa; font-size: 13px;">
         提示：FN = MO(1) 默认=右Shift或者右ALT
     </div>
-    <script>
-       fetch('navbar.html')
+  <script>
+fetch('navbar.html')
   .then(response => response.text())
   .then(data => {
     document.getElementById('navbar-placeholder').innerHTML = data;
+    
+    // 获取当前页面文件名（如 index.html、shortcuts.html）
+    var currentPage = window.location.pathname.split('/').pop();
+    // 如果路径末尾没有文件名（比如直接访问域名），默认 index.html
+    if (!currentPage || currentPage.indexOf('.') === -1) {
+      currentPage = 'index.html';
+    }
+    
+    // 遍历所有导航链接，匹配高亮
+    var navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(function(item) {
+      if (item.getAttribute('href') === currentPage) {
+        item.style.backgroundColor = '#4CAF50';
+        item.style.borderBottom = '3px solid #2E7D32';
+      }
+    });
   });
-    </script>
+</script>
 </body>
 
 </html>

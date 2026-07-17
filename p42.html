@@ -2,14 +2,21 @@
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=gb2312">
 <style>
-body { font-family: Arial, sans-serif; line-height: 1.6; padding: 0; }
+body { font-family: Arial, sans-serif; line-height: 0; padding: 0; margin: 0;}
 .highlight { background: yellow; }
 .highlight-pink { background: fuchsia; }
 </style>
 </head>
 <body>
 <!-- 导航栏 -->
-<div id="navbar-placeholder" class="navbar" style="display: flex; justify-content: flex-start; background-color: #333; width: 100%;">
+<div id="navbar-placeholder" class="navbar" 
+style="display: flex; justify-content: flex-start; background-color: #333; width: 100%;">
+
+<a class="nav-item" href="shortcuts.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">⌨️ 键盘快捷键</a>
+    <a class="nav-item" href="index.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">🔌 UART 命令</a>
+    <a class="nav-item" href="p42.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">P42 帮助文档</a>
+
+
 </div>
 
 <p>改键请打开在线软件:<br>
@@ -21,15 +28,11 @@ https://vial.rocks/</p>
 
 <p><img src="p42/image002.jpg" alt="键盘示意图" width="642" height="241"></p>
 
-<p>&nbsp;</p>
-
 <p><img src="p42/image004.jpg" alt="键盘示意图" width="642" height="212"></p>
 
-<p><br><br></p>
 
 <p><img src="p42/image006.jpg" alt="截图" width="642" height="291"></p>
 
-<p>&nbsp;</p>
 
 <p>重点 -> 新PCB到手以后第一件事清除所有已有配对:</p>
 
@@ -40,12 +43,9 @@ https://vial.rocks/</p>
 </ul>
 
 <p>FN + left + Q：蓝牙通道1 (BLE1) -- 当前通道<span class="highlight">按住3秒以上</span>清除已有配对</p>
-
 <p>FN + left + W：蓝牙通道2 (BLE2) -- 当前通道按<span class="highlight">住3秒以上</span>清除已有配对</p>
-
 <p>FN + left + E：蓝牙通道3 (BLE3) -- 当前通道按<span class="highlight">住3秒以上</span>清除已有配对</p>
 
-<p>&nbsp;</p>
 
 <p>FN + ESC : 进入刷机模式(短按)<br>
 FN + ESC : <span class="highlight">恢复出厂模式-长按3秒以上</span>,收到货第一次使用请执行一次</p>

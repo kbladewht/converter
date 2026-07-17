@@ -1,23 +1,58 @@
 <html>
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <style>
-body { font-family: Arial, sans-serif; line-height: 0; padding: 0; margin: 0;}
+body { 
+    font-family: Arial, sans-serif; 
+    line-height: 1.6; 
+    padding: 0; 
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.content {
+    width: 90%;
+    max-width: 720px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .highlight { background: yellow; }
 .highlight-pink { background: fuchsia; }
+
+p, li {
+    font-size: 15px;
+    text-align: left;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
 </style>
 </head>
 <body>
+
 <!-- 导航栏 -->
 <div id="navbar-placeholder" class="navbar" 
 style="display: flex; justify-content: flex-start; background-color: #333; width: 100%;">
 
-<a class="nav-item" href="shortcuts.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">⌨️ 键盘快捷键</a>
-    <a class="nav-item" href="index.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">🔌 UART 命令</a>
-    <a class="nav-item" href="p42.html" style="padding: 12px 28px; color: white; cursor: pointer; font-size: 16px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">P42 帮助文档</a>
-
-
+<!-- <a class="nav-item" href="shortcuts.html" style="padding: 12px 24px; color: white; cursor: pointer; font-size: 15px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">⌨️ 键盘快捷键</a>
+<a class="nav-item" href="index.html" style="padding: 12px 24px; color: white; cursor: pointer; font-size: 15px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">🔌 UART 命令</a>
+<a class="nav-item" href="p42.html" style="padding: 12px 24px; color: white; cursor: pointer; font-size: 15px; text-decoration: none; user-select: none; border-bottom: 3px solid transparent;">P42 帮助文档</a> -->
 </div>
+
+<div class="content">
 
 <p>改键请打开在线软件:<br>
 https://vial.rocks/</p>
@@ -26,58 +61,47 @@ https://vial.rocks/</p>
 
 <p>VIAL 和上图对应关系</p>
 
-<p><img src="p42/image002.jpg" alt="键盘示意图" width="642" height="241"></p>
+<p><img src="p42/image002.jpg" alt="键盘示意图"></p>
 
-<p><img src="p42/image004.jpg" alt="键盘示意图" width="642" height="212"></p>
+<p><img src="p42/image004.jpg" alt="键盘示意图"></p>
 
-
-<p><img src="p42/image006.jpg" alt="截图" width="642" height="291"></p>
-
+<p><img src="p42/image006.jpg" alt="截图"></p>
 
 <p>重点 -> 新PCB到手以后第一件事清除所有已有配对:</p>
 
 <p><span class="highlight-pink">FN+left+D &nbsp; --- 上图的Del Bonds 键值</span></p>
 
-<ul>
-<li><span class="highlight">蓝牙相关 FN 默认为 MO(1)</span></li>
-</ul>
+<p><strong class="highlight">蓝牙相关 FN 默认为 MO(1)</strong></p>
 
 <p>FN + left + Q：蓝牙通道1 (BLE1) -- 当前通道<span class="highlight">按住3秒以上</span>清除已有配对</p>
 <p>FN + left + W：蓝牙通道2 (BLE2) -- 当前通道按<span class="highlight">住3秒以上</span>清除已有配对</p>
 <p>FN + left + E：蓝牙通道3 (BLE3) -- 当前通道按<span class="highlight">住3秒以上</span>清除已有配对</p>
 
-
 <p>FN + ESC : 进入刷机模式(短按)<br>
 FN + ESC : <span class="highlight">恢复出厂模式-长按3秒以上</span>,收到货第一次使用请执行一次</p>
 
-<ul>
-<li><span class="highlight">2.4G相关</span><br>
-FN + left + R：2.4G连接 (2.4G)</li>
-</ul>
+<p><strong class="highlight">2.4G相关</strong></p>
+<p>FN + left + R：2.4G连接 (2.4G)</p>
 
-<ul>
-<li><span class="highlight">灯效相关</span></li>
-</ul>
+<p><strong class="highlight">灯效相关</strong></p>
 
 <p>FN+D: 打开或者关闭灯效</p>
 
 <p>FN+S: 切换灯效</p>
 
-<p>&nbsp;</p>
+</div>
+
 <script>
-     fetch('navbar.html')
+fetch('navbar.html')
   .then(response => response.text())
   .then(data => {
     document.getElementById('navbar-placeholder').innerHTML = data;
     
-    // 获取当前页面文件名（如 index.html、shortcuts.html）
     var currentPage = window.location.pathname.split('/').pop();
-    // 如果路径末尾没有文件名（比如直接访问域名），默认 index.html
     if (!currentPage || currentPage.indexOf('.') === -1) {
       currentPage = 'p42.html';
     }
     
-    // 遍历所有导航链接，匹配高亮
     var navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(function(item) {
       if (item.getAttribute('href') === currentPage) {
@@ -87,5 +111,6 @@ FN + left + R：2.4G连接 (2.4G)</li>
     });
   });
 </script>
+
 </body>
 </html>

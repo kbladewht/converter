@@ -237,7 +237,7 @@
                     );
 
                     // 去掉 CLI prompt
-                    ansiBuffer = ansiBuffer.replace(/usb_cli:~\$\s*/g, '');
+                    ansiBuffer = ansiBuffer.replace(/usb_cli:\$\s*/g, '');
 
                     logElement.value += ansiBuffer;
                     ansiBuffer = "";

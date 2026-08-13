@@ -214,46 +214,67 @@
             );
 
         }
-        
+        let rxBuffer = "";
+let ansiBuffer = "";
 
-      let ansiBuffer = "";
+function filterAnsi(text) {
+    ansiBuffer += text;
 
-        async function readData() {
-            try {
-                const decoder = new TextDecoder();
+    // 过滤完整的 ESC [ ... 命令
+    ansiBuffer = ansiBuffer.replace(
+        /\x1B\[[0-9;?]*[ -/]*[@-~]/g,
+        ''
+    );
 
-                while (true) {
-                    const { value, done } = await reader.read();
+    // 如果末尾存在不完整的 ESC 序列，保留下来等待下一次
+    const escPos = ansiBuffer.lastIndexOf('\x1B');
 
-                    if (done)
-                        break;
+    if (escPos >= 0) {
+        const tail = ansiBuffer.substring(escPos);
 
-                    ansiBuffer += decoder.decode(value, { stream: true });
-
-                
-                           // 过滤完整 ANSI CSI 序列
-                        rxBuffer = rxBuffer.replace(
-                            /\x1B\[[0-9;?]*[ -/]*[@-~]/g,
-                            ''
-                        );
-
-                        // 删除 CLI prompt
-                        rxBuffer = rxBuffer.replace(
-                            /usb_cli:[^$]*\$\s*/g,
-                            ''
-                        );
-
-                    logElement.value += ansiBuffer;
-                    ansiBuffer = "";
-
-                    logElement.scrollTop = logElement.scrollHeight;
-                }
-            }
-            catch (e) {
-                console.log("UART disconnected", e);
-                uartDisconnected();
-            }
+        // 如果 ESC 后面看起来是一个还没接收完整的 CSI
+        if (
+            tail === '\x1B' ||
+            /^\[[0-9;?]*[ -/]*$/.test(tail)
+        ) {
+            ansiBuffer = ansiBuffer.substring(0, escPos);
+            return ansiBuffer;
         }
+    }
+
+    const result = ansiBuffer;
+    ansiBuffer = "";
+
+    return result;
+}
+
+async function readData() {
+    try {
+        const decoder = new TextDecoder();
+
+        while (true) {
+            const { value, done } = await reader.read();
+
+            if (done)
+                break;
+
+            let text = decoder.decode(value, { stream: true });
+
+            // ANSI / VT100
+            text = filterAnsi(text);
+
+            // 删除 usb_cli prompt
+            text = text.replace(/usb_cli:[^$]*\$\s*/g, '');
+
+            logElement.value += text;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+    }
+    catch (e) {
+        console.log("UART disconnected", e);
+        uartDisconnected();
+    }
+}
      
         async function openUART(forceSelect=false)
 {

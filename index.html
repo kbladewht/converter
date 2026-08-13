@@ -218,6 +218,7 @@
 
       let ansiBuffer = "";
 
+
         async function readData() {
             try {
                 const decoder = new TextDecoder();
@@ -234,8 +235,10 @@
                     // 去掉 CLI prompt
                     // ansiBuffer = ansiBuffer.replace(/usb_cli:~\$\s*/g, '');
                     ansiBuffer = ansiBuffer.replace(/\x1B(?:[@-_]|\[[0-?]*[ -/]*[@-~])/g, '');
-                    ansiBuffer = ansiBuffer.replace(/\[1D/g, '');
+
                     logElement.value += ansiBuffer;
+                    logElement.value = logElement.value.replace(/\[1DJ/g, '');
+                    logElement.value = logElement.value.replace(/\[1D/g, '');
                     ansiBuffer = "";
 
                     logElement.scrollTop = logElement.scrollHeight;

@@ -225,15 +225,15 @@
                 while (true) {
                     const { value, done } = await reader.read();
 
+                    if (done)
+                        break;
+
                     ansiBuffer += decoder.decode(value, { stream: true });
 
                     // 没收到完整一行，继续接收
                     if (!ansiBuffer.includes('\n')) {
                         continue;
                     }
-
-                    if (done)
-                        break;
 
 
 

@@ -231,9 +231,17 @@
                     ansiBuffer += decoder.decode(value, { stream: true });
 
                 
-                    // 去掉 CLI prompt
-                    // ansiBuffer = ansiBuffer.replace(/usb_cli:~\$\s*/g, '');
-                    ansiBuffer = ansiBuffer.replace(/\x1B(?:[@-_]|\[[0-?]*[ -/]*[@-~])/g, '');
+                           // 过滤完整 ANSI CSI 序列
+                        rxBuffer = rxBuffer.replace(
+                            /\x1B\[[0-9;?]*[ -/]*[@-~]/g,
+                            ''
+                        );
+
+                        // 删除 CLI prompt
+                        rxBuffer = rxBuffer.replace(
+                            /usb_cli:[^$]*\$\s*/g,
+                            ''
+                        );
 
                     logElement.value += ansiBuffer;
                     ansiBuffer = "";

@@ -214,67 +214,38 @@
             );
 
         }
-        let rxBuffer = "";
-let ansiBuffer = "";
+        
 
-function filterAnsi(text) {
-    ansiBuffer += text;
+      let ansiBuffer = "";
 
-    // 过滤完整的 ESC [ ... 命令
-    ansiBuffer = ansiBuffer.replace(
-        /\x1B\[[0-9;?]*[ -/]*[@-~]/g,
-        ''
-    );
+        async function readData() {
+            try {
+                const decoder = new TextDecoder();
 
-    // 如果末尾存在不完整的 ESC 序列，保留下来等待下一次
-    const escPos = ansiBuffer.lastIndexOf('\x1B');
+                while (true) {
+                    const { value, done } = await reader.read();
 
-    if (escPos >= 0) {
-        const tail = ansiBuffer.substring(escPos);
+                    if (done)
+                        break;
 
-        // 如果 ESC 后面看起来是一个还没接收完整的 CSI
-        if (
-            tail === '\x1B' ||
-            /^\[[0-9;?]*[ -/]*$/.test(tail)
-        ) {
-            ansiBuffer = ansiBuffer.substring(0, escPos);
-            return ansiBuffer;
+                    ansiBuffer += decoder.decode(value, { stream: true });
+
+                
+                    // 去掉 CLI prompt
+                    // ansiBuffer = ansiBuffer.replace(/usb_cli:~\$\s*/g, '');
+                    ansiBuffer = ansiBuffer.replace(/\x1B(?:[@-_]|\[[0-?]*[ -/]*[@-~])/g, '');
+                    ansiBuffer = ansiBuffer.replace(/\[1D/g, '');
+                    logElement.value += ansiBuffer;
+                    ansiBuffer = "";
+
+                    logElement.scrollTop = logElement.scrollHeight;
+                }
+            }
+            catch (e) {
+                console.log("UART disconnected", e);
+                uartDisconnected();
+            }
         }
-    }
-
-    const result = ansiBuffer;
-    ansiBuffer = "";
-
-    return result;
-}
-
-async function readData() {
-    try {
-        const decoder = new TextDecoder();
-
-        while (true) {
-            const { value, done } = await reader.read();
-
-            if (done)
-                break;
-
-            let text = decoder.decode(value, { stream: true });
-
-            // ANSI / VT100
-            text = filterAnsi(text);
-
-            // 删除 usb_cli prompt
-            text = text.replace(/usb_cli:[^$]*\$\s*/g, '');
-
-            logElement.value += text;
-            logElement.scrollTop = logElement.scrollHeight;
-        }
-    }
-    catch (e) {
-        console.log("UART disconnected", e);
-        uartDisconnected();
-    }
-}
      
         async function openUART(forceSelect=false)
 {

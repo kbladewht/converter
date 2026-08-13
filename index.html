@@ -216,6 +216,8 @@
         }
         
 
+      let ansiBuffer = "";
+
         async function readData() {
             try {
                 const decoder = new TextDecoder();
@@ -226,12 +228,20 @@
                     if (done)
                         break;
 
-                    let text = decoder.decode(value, { stream: true });
+                    ansiBuffer += decoder.decode(value, { stream: true });
 
-                    // 过滤 ANSI/VT100 控制序列
-                    text = text.replace(/\x1B\[[0-9;?]*[ -/]*[@-~]/g, '');
+                    // 去掉 ANSI/VT100 控制字符
+                    ansiBuffer = ansiBuffer.replace(
+                        /\x1B\[[0-9;?]*[ -/]*[@-~]/g,
+                        ''
+                    );
 
-                    logElement.value += text;
+                    // 去掉 CLI prompt
+                    ansiBuffer = ansiBuffer.replace(/usb_cli:~\$\s*/g, '');
+
+                    logElement.value += ansiBuffer;
+                    ansiBuffer = "";
+
                     logElement.scrollTop = logElement.scrollHeight;
                 }
             }

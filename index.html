@@ -239,7 +239,7 @@
 
                 
                     ansiBuffer = ansiBuffer.replace(/\x1B(?:[@-_]|\[[0-?]*[ -/]*[@-~])/g, '');
-                    ansiBuffer = ansiBuffer.replace(/\x1B\[1D/g, '');
+                    ansiBuffer = ansiBuffer.replace(/1DJ/g, '');
 
                     logElement.value += ansiBuffer;
                     ansiBuffer = "";

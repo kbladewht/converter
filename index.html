@@ -214,21 +214,25 @@
             );
 
         }
-        async function readData() {
+        
 
+        async function readData() {
             try {
+                const decoder = new TextDecoder();
 
                 while (true) {
-
-                    const { value, done } =
-                        await reader.read();
+                    const { value, done } = await reader.read();
 
                     if (done)
                         break;
 
-                    logElement.value +=new TextDecoder().decode(value);
+                    let text = decoder.decode(value, { stream: true });
 
-                    logElement.scrollTop =logElement.scrollHeight;
+                    // 过滤 ANSI/VT100 控制序列
+                    text = text.replace(/\x1B\[[0-9;?]*[ -/]*[@-~]/g, '');
+
+                    logElement.value += text;
+                    logElement.scrollTop = logElement.scrollHeight;
                 }
             }
             catch (e) {

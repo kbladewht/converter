@@ -11,7 +11,6 @@
 
 <title>键盘按键测试 - HID Wireless</title>
 
-
 <style>
 
 /* =====================================================
@@ -22,18 +21,12 @@
     box-sizing: border-box;
 }
 
-
 html,
 body {
-
     margin: 0;
-
     padding: 0;
-
     min-height: 100%;
-
 }
-
 
 :root {
 
@@ -55,7 +48,6 @@ body {
 
     --green-dark: #20b96c;
 
-
     /* 已测试 */
 
     --tested-top: #526984;
@@ -66,13 +58,10 @@ body {
 
     --tested-border: #8296ae;
 
-
     --unit: 58px;
 
     --gap: 6px;
-
 }
-
 
 body {
 
@@ -94,7 +83,6 @@ body {
         sans-serif;
 
     padding-bottom: 40px;
-
 }
 
 
@@ -125,9 +113,7 @@ body {
 
     -webkit-backdrop-filter:
         blur(12px);
-
 }
-
 
 .topbar-inner {
 
@@ -144,7 +130,6 @@ body {
     align-items: center;
 
     gap: 30px;
-
 }
 
 
@@ -163,9 +148,7 @@ body {
     white-space: nowrap;
 
     margin-right: 10px;
-
 }
-
 
 .brand-dot {
 
@@ -180,9 +163,7 @@ body {
     box-shadow:
         0 0 10px
         rgba(57, 217, 138, .55);
-
 }
-
 
 .brand-name {
 
@@ -193,9 +174,7 @@ body {
     font-weight: 700;
 
     letter-spacing: .2px;
-
 }
-
 
 .brand-sub {
 
@@ -204,7 +183,6 @@ body {
     font-size: 13px;
 
     margin-left: -4px;
-
 }
 
 
@@ -221,9 +199,7 @@ body {
     gap: 4px;
 
     flex: 1;
-
 }
-
 
 .topnav a {
 
@@ -248,15 +224,10 @@ body {
     border: 1px solid transparent;
 
     transition:
-
         background .15s ease,
-
         color .15s ease,
-
         border-color .15s ease;
-
 }
-
 
 .topnav a:hover {
 
@@ -267,11 +238,7 @@ body {
 
     border-color:
         rgba(255, 255, 255, .06);
-
 }
-
-
-/* 当前页面 */
 
 .topnav a.active {
 
@@ -282,12 +249,11 @@ body {
 
     border-color:
         rgba(57, 217, 138, .22);
-
 }
 
 
 /* =====================================================
-   Theme button
+   Theme
 ===================================================== */
 
 .topbar-actions {
@@ -297,9 +263,7 @@ body {
     align-items: center;
 
     margin-left: auto;
-
 }
-
 
 .icon-btn {
 
@@ -326,16 +290,13 @@ body {
     font-size: 16px;
 
     cursor: pointer;
-
 }
-
 
 .icon-btn:hover {
 
     background: #2b313b;
 
     border-color: #4a5362;
-
 }
 
 
@@ -347,26 +308,70 @@ body {
 
     text-align: center;
 
-    margin-bottom: 25px;
-
+    margin-bottom: 18px;
 }
-
 
 .header h1 {
 
     margin: 0;
 
     font-size: 32px;
-
 }
-
 
 .header p {
 
     margin: 8px 0 0;
 
     color: var(--muted);
+}
 
+
+/* =====================================================
+   Test mode
+===================================================== */
+
+.test-mode {
+
+    width: max-content;
+
+    max-width: calc(100% - 20px);
+
+    margin: 0 auto 20px;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    color: #8ff0bd;
+
+    background:
+        rgba(57, 217, 138, .09);
+
+    border:
+        1px solid rgba(57, 217, 138, .2);
+
+    font-size: 13px;
+}
+
+.test-mode::before {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 7px;
+
+    height: 7px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 8px
+        rgba(57, 217, 138, .6);
 }
 
 
@@ -378,16 +383,14 @@ body {
 
     width: max-content;
 
-    max-width: 100%;
+    max-width: calc(100% - 20px);
 
     margin: 0 auto 20px;
 
     display: flex;
 
     gap: 10px;
-
 }
-
 
 .status-item {
 
@@ -397,21 +400,18 @@ body {
 
     background: var(--keyboard);
 
-    border: 1px solid #292f39;
+    border:
+        1px solid #292f39;
 
     border-radius: 10px;
-
 }
-
 
 .status-title {
 
     color: var(--muted);
 
     font-size: 12px;
-
 }
-
 
 .status-value {
 
@@ -420,7 +420,6 @@ body {
     font-size: 19px;
 
     font-weight: 600;
-
 }
 
 
@@ -442,15 +441,15 @@ body {
 
     background: var(--keyboard);
 
-    border: 1px solid #2a3039;
+    border:
+        1px solid #2a3039;
 
     border-radius: 15px;
 
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, .4);
-
+        0 20px 60px
+        rgba(0, 0, 0, .4);
 }
-
 
 .keyboard {
 
@@ -461,7 +460,6 @@ body {
     flex-direction: column;
 
     gap: var(--gap);
-
 }
 
 
@@ -476,9 +474,7 @@ body {
     gap: var(--gap);
 
     margin-bottom: 8px;
-
 }
-
 
 .function-row .spacer {
 
@@ -486,16 +482,13 @@ body {
         calc(
             var(--unit) * .5
         );
-
 }
-
 
 .fgroup {
 
     display: flex;
 
     gap: var(--gap);
-
 }
 
 
@@ -508,9 +501,7 @@ body {
     display: flex;
 
     gap: 25px;
-
 }
-
 
 .main-keyboard {
 
@@ -519,16 +510,13 @@ body {
     flex-direction: column;
 
     gap: var(--gap);
-
 }
-
 
 .key-row {
 
     display: flex;
 
     gap: var(--gap);
-
 }
 
 
@@ -554,12 +542,13 @@ body {
 
     border-radius: 7px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    border-bottom: 3px solid #15191f;
+    border-bottom:
+        3px solid #15191f;
 
     background:
-
         linear-gradient(
             180deg,
             var(--key-top),
@@ -577,53 +566,38 @@ body {
     user-select: none;
 
     transition:
-
         background .08s,
-
         transform .05s,
-
         border-color .08s,
-
         box-shadow .08s;
-
 }
-
 
 .key:hover {
 
     border-color: #647082;
-
 }
 
 
 /* =====================================================
-   已测试
+   Tested
 ===================================================== */
 
 .key.tested:not(.pressed) {
 
     background:
-
         linear-gradient(
             145deg,
-
             var(--tested-top) 0%,
-
             var(--tested-mid) 48%,
-
             var(--tested-bottom) 100%
         );
 
     border-color:
-
         var(--tested-border);
 
-    color:
-
-        #ffffff;
+    color: #ffffff;
 
     box-shadow:
-
         inset 0 1px 0
             rgba(255, 255, 255, .18),
 
@@ -634,45 +608,34 @@ body {
             rgba(40, 65, 95, .28);
 
     transform:
-
         translateY(-1px);
-
 }
-
 
 .key.tested:not(.pressed):hover {
 
     background:
-
         linear-gradient(
             145deg,
-
             #5d7591 0%,
-
             #506781 48%,
-
             #43586f 100%
         );
 
     border-color:
-
         #9badc2;
-
 }
 
 
 /* =====================================================
-   当前按下
+   Pressed
 ===================================================== */
 
 .key.pressed {
 
     transform:
-
         translateY(2px);
 
     background:
-
         linear-gradient(
             180deg,
             #48e39a,
@@ -680,21 +643,17 @@ body {
         );
 
     color:
-
         #06140c;
 
     border-color:
-
         #9af4c5;
 
     box-shadow:
-
         0 0 18px
             rgba(57, 217, 138, .45),
 
         inset 0 1px 0
             rgba(255, 255, 255, .2);
-
 }
 
 
@@ -709,9 +668,7 @@ body {
             var(--unit) * 1.25 +
             var(--gap) * .25
         );
-
 }
-
 
 .w150 {
 
@@ -720,9 +677,7 @@ body {
             var(--unit) * 1.5 +
             var(--gap) * .5
         );
-
 }
-
 
 .w175 {
 
@@ -731,9 +686,7 @@ body {
             var(--unit) * 1.75 +
             var(--gap) * .75
         );
-
 }
-
 
 .w225 {
 
@@ -742,9 +695,7 @@ body {
             var(--unit) * 2.25 +
             var(--gap) * 1.25
         );
-
 }
-
 
 .w275 {
 
@@ -753,9 +704,7 @@ body {
             var(--unit) * 2.75 +
             var(--gap) * 1.75
         );
-
 }
-
 
 .w625 {
 
@@ -764,12 +713,11 @@ body {
             var(--unit) * 6.25 +
             var(--gap) * 5.25
         );
-
 }
 
 
 /* =====================================================
-   Right side
+   Right
 ===================================================== */
 
 .right-side {
@@ -777,13 +725,7 @@ body {
     display: flex;
 
     gap: 25px;
-
 }
-
-
-/* =====================================================
-   Navigation keys
-===================================================== */
 
 .navigation {
 
@@ -792,22 +734,14 @@ body {
     flex-direction: column;
 
     gap: var(--gap);
-
 }
-
 
 .nav-row {
 
     display: flex;
 
     gap: var(--gap);
-
 }
-
-
-/* =====================================================
-   Arrows
-===================================================== */
 
 .arrows {
 
@@ -818,16 +752,13 @@ body {
     justify-content: flex-end;
 
     gap: var(--gap);
-
 }
-
 
 .arrow-row {
 
     display: flex;
 
     gap: var(--gap);
-
 }
 
 
@@ -846,16 +777,12 @@ body {
         repeat(5, var(--unit));
 
     gap: var(--gap);
-
 }
-
 
 .numpad .key {
 
     width: var(--unit);
-
 }
-
 
 .numpad-add {
 
@@ -868,9 +795,7 @@ body {
             var(--unit) * 2 +
             var(--gap)
         );
-
 }
-
 
 .numpad-enter {
 
@@ -883,9 +808,7 @@ body {
             var(--unit) * 2 +
             var(--gap)
         );
-
 }
-
 
 .numpad-zero {
 
@@ -896,7 +819,6 @@ body {
             var(--unit) * 2 +
             var(--gap)
         );
-
 }
 
 
@@ -919,9 +841,7 @@ body {
     gap: 15px;
 
     padding: 0 10px;
-
 }
-
 
 .control-right {
 
@@ -930,16 +850,12 @@ body {
     align-items: center;
 
     gap: 10px;
-
 }
-
 
 .sound {
 
     color: var(--muted);
-
 }
-
 
 select,
 button {
@@ -948,7 +864,8 @@ button {
 
     border-radius: 8px;
 
-    border: 1px solid #3d4552;
+    border:
+        1px solid #3d4552;
 
     background: #20252d;
 
@@ -957,46 +874,36 @@ button {
     cursor: pointer;
 
     font-size: 14px;
-
 }
-
 
 select:hover,
 button:hover {
 
     background: #2b313b;
-
 }
-
 
 select {
 
     min-width: 160px;
-
 }
-
 
 button.primary {
 
     background:
-
         var(--green-dark);
 
     color:
-
         #06140c;
 
     border-color:
-
         var(--green);
 
     font-weight: 600;
-
 }
 
 
 /* =====================================================
-   Information
+   Info
 ===================================================== */
 
 .info {
@@ -1013,22 +920,19 @@ button.primary {
     gap: 10px;
 
     padding: 0 10px;
-
 }
-
 
 .info-box {
 
     background: var(--keyboard);
 
-    border: 1px solid #292f39;
+    border:
+        1px solid #292f39;
 
     border-radius: 9px;
 
     padding: 12px 15px;
-
 }
-
 
 .info-title {
 
@@ -1037,9 +941,7 @@ button.primary {
     color: var(--muted);
 
     margin-bottom: 5px;
-
 }
-
 
 .info-value {
 
@@ -1050,7 +952,6 @@ button.primary {
     font-size: 14px;
 
     word-break: break-all;
-
 }
 
 
@@ -1081,14 +982,11 @@ body.light-theme {
     --tested-bottom: #7089a2;
 
     --tested-border: #5f7892;
-
 }
-
 
 body.light-theme {
 
     background:
-
         radial-gradient(
             circle at 50% -10%,
             #ffffff 0,
@@ -1096,9 +994,7 @@ body.light-theme {
         ),
 
         var(--bg);
-
 }
-
 
 body.light-theme .topbar {
 
@@ -1107,23 +1003,17 @@ body.light-theme .topbar {
 
     border-bottom:
         1px solid #d6dce4;
-
 }
-
 
 body.light-theme .brand-name {
 
     color: #202631;
-
 }
-
 
 body.light-theme .topnav a {
 
     color: #687384;
-
 }
-
 
 body.light-theme .topnav a:hover {
 
@@ -1131,9 +1021,7 @@ body.light-theme .topnav a:hover {
 
     background:
         rgba(0, 0, 0, .04);
-
 }
-
 
 body.light-theme .topnav a.active {
 
@@ -1144,9 +1032,7 @@ body.light-theme .topnav a.active {
 
     border-color:
         rgba(57, 217, 138, .3);
-
 }
-
 
 body.light-theme .icon-btn {
 
@@ -1155,16 +1041,7 @@ body.light-theme .icon-btn {
     border-color: #ccd3dc;
 
     color: #303844;
-
 }
-
-
-body.light-theme .icon-btn:hover {
-
-    background: #e4e8ed;
-
-}
-
 
 body.light-theme select,
 body.light-theme button {
@@ -1174,16 +1051,13 @@ body.light-theme button {
     border-color: #ccd3dc;
 
     color: #202631;
-
 }
-
 
 body.light-theme button.primary {
 
     background: #39c982;
 
     color: #062416;
-
 }
 
 
@@ -1196,68 +1070,46 @@ body.light-theme button.primary {
     .topbar-inner {
 
         gap: 12px;
-
     }
-
 
     .topnav {
 
         overflow-x: auto;
 
         scrollbar-width: none;
-
     }
-
 
     .topnav::-webkit-scrollbar {
 
         display: none;
-
     }
-
 
     .topnav a {
 
         padding: 0 10px;
 
         font-size: 12px;
-
     }
-
 }
 
-
 @media(max-width: 800px) {
-
-    body {
-
-        padding-bottom: 25px;
-
-    }
-
 
     .topbar-inner {
 
         min-height: 58px;
 
         padding: 0 12px;
-
     }
-
 
     .brand-sub {
 
         display: none;
-
     }
-
 
     .brand {
 
         margin-right: 0;
-
     }
-
 
     .status {
 
@@ -1267,50 +1119,37 @@ body.light-theme button.primary {
 
         grid-template-columns:
             repeat(2, 1fr);
-
     }
-
 
     .status-item {
 
         min-width: 0;
-
     }
-
 
     .controls {
 
         flex-direction: column;
 
         align-items: stretch;
-
     }
-
 
     .control-right {
 
         flex-wrap: wrap;
-
     }
-
 
     .info {
 
         grid-template-columns: 1fr;
-
     }
-
 }
-
 
 @media(max-width: 600px) {
 
     .brand-name {
 
         display: none;
-
     }
-
 
     .topnav a {
 
@@ -1319,18 +1158,14 @@ body.light-theme button.primary {
         padding: 0 8px;
 
         font-size: 11px;
-
     }
-
 
     .icon-btn {
 
         width: 34px;
 
         height: 34px;
-
     }
-
 }
 
 </style>
@@ -1342,13 +1177,12 @@ body.light-theme button.primary {
 
 
 <!-- =====================================================
-     顶部导航
+     Top Navigation
 ===================================================== -->
 
 <header class="topbar">
 
     <div class="topbar-inner">
-
 
         <div class="brand">
 
@@ -1359,7 +1193,7 @@ body.light-theme button.primary {
             </span>
 
             <span class="brand-sub">
-                Tester
+                Receiver
             </span>
 
         </div>
@@ -1405,7 +1239,6 @@ body.light-theme button.primary {
 
         </div>
 
-
     </div>
 
 </header>
@@ -1428,12 +1261,18 @@ body.light-theme button.primary {
 </div>
 
 
+<div class="test-mode">
+
+    测试模式已开启 · 普通键盘快捷键已屏蔽
+
+</div>
+
+
 <!-- =====================================================
      Status
 ===================================================== -->
 
 <div class="status">
-
 
     <div class="status-item">
 
@@ -1508,7 +1347,6 @@ body.light-theme button.primary {
 
     </div>
 
-
 </div>
 
 
@@ -1518,154 +1356,72 @@ body.light-theme button.primary {
 
 <div class="keyboard-wrapper">
 
-
 <div class="keyboard">
 
 
-<!-- =====================================================
-     Function row
-===================================================== -->
+<!-- Function -->
 
 <div class="function-row">
-
 
     <div
         class="key"
         data-code="Escape">
-
         Esc
-
     </div>
-
 
     <div class="spacer"></div>
 
-
     <div class="fgroup">
 
-        <div
-            class="key"
-            data-code="F1">
-            F1
-        </div>
-
-        <div
-            class="key"
-            data-code="F2">
-            F2
-        </div>
-
-        <div
-            class="key"
-            data-code="F3">
-            F3
-        </div>
-
-        <div
-            class="key"
-            data-code="F4">
-            F4
-        </div>
+        <div class="key" data-code="F1">F1</div>
+        <div class="key" data-code="F2">F2</div>
+        <div class="key" data-code="F3">F3</div>
+        <div class="key" data-code="F4">F4</div>
 
     </div>
 
-
     <div class="spacer"></div>
-
 
     <div class="fgroup">
 
-        <div
-            class="key"
-            data-code="F5">
-            F5
-        </div>
-
-        <div
-            class="key"
-            data-code="F6">
-            F6
-        </div>
-
-        <div
-            class="key"
-            data-code="F7">
-            F7
-        </div>
-
-        <div
-            class="key"
-            data-code="F8">
-            F8
-        </div>
+        <div class="key" data-code="F5">F5</div>
+        <div class="key" data-code="F6">F6</div>
+        <div class="key" data-code="F7">F7</div>
+        <div class="key" data-code="F8">F8</div>
 
     </div>
 
-
     <div class="spacer"></div>
-
 
     <div class="fgroup">
 
-        <div
-            class="key"
-            data-code="F9">
-            F9
-        </div>
-
-        <div
-            class="key"
-            data-code="F10">
-            F10
-        </div>
-
-        <div
-            class="key"
-            data-code="F11">
-            F11
-        </div>
-
-        <div
-            class="key"
-            data-code="F12">
-            F12
-        </div>
+        <div class="key" data-code="F9">F9</div>
+        <div class="key" data-code="F10">F10</div>
+        <div class="key" data-code="F11">F11</div>
+        <div class="key" data-code="F12">F12</div>
 
     </div>
 
-
     <div class="spacer"></div>
-
 
     <div class="fgroup">
 
-        <div
-            class="key"
-            data-code="PrintScreen">
+        <div class="key" data-code="PrintScreen">
             PrtSc
         </div>
 
-        <div
-            class="key"
-            data-code="ScrollLock">
+        <div class="key" data-code="ScrollLock">
             ScrLk
         </div>
 
-        <div
-            class="key"
-            data-code="Pause">
+        <div class="key" data-code="Pause">
             Pause
         </div>
 
     </div>
 
-
 </div>
 
-
-<!-- =====================================================
-     Keyboard body
-===================================================== -->
 
 <div class="keyboard-body">
 
@@ -1677,103 +1433,32 @@ body.light-theme button.primary {
 
 <div class="key-row">
 
-
-    <div
-        class="key"
-        data-code="Backquote">
-
+    <div class="key" data-code="Backquote">
         ` ~
-
     </div>
 
+    <div class="key" data-code="Digit1">1</div>
+    <div class="key" data-code="Digit2">2</div>
+    <div class="key" data-code="Digit3">3</div>
+    <div class="key" data-code="Digit4">4</div>
+    <div class="key" data-code="Digit5">5</div>
+    <div class="key" data-code="Digit6">6</div>
+    <div class="key" data-code="Digit7">7</div>
+    <div class="key" data-code="Digit8">8</div>
+    <div class="key" data-code="Digit9">9</div>
+    <div class="key" data-code="Digit0">0</div>
 
-    <div
-        class="key"
-        data-code="Digit1">
-        1
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit2">
-        2
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit3">
-        3
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit4">
-        4
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit5">
-        5
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit6">
-        6
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit7">
-        7
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit8">
-        8
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit9">
-        9
-    </div>
-
-    <div
-        class="key"
-        data-code="Digit0">
-        0
-    </div>
-
-
-    <div
-        class="key"
-        data-code="Minus">
-
+    <div class="key" data-code="Minus">
         - _
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Equal">
-
+    <div class="key" data-code="Equal">
         = +
-
     </div>
 
-
-    <div
-        class="key w225"
-        data-code="Backspace">
-
+    <div class="key w225" data-code="Backspace">
         Backspace
-
     </div>
-
 
 </div>
 
@@ -1782,15 +1467,9 @@ body.light-theme button.primary {
 
 <div class="key-row">
 
-
-    <div
-        class="key w150"
-        data-code="Tab">
-
+    <div class="key w150" data-code="Tab">
         Tab
-
     </div>
-
 
     <div class="key" data-code="KeyQ">Q</div>
     <div class="key" data-code="KeyW">W</div>
@@ -1803,33 +1482,17 @@ body.light-theme button.primary {
     <div class="key" data-code="KeyO">O</div>
     <div class="key" data-code="KeyP">P</div>
 
-
-    <div
-        class="key"
-        data-code="BracketLeft">
-
+    <div class="key" data-code="BracketLeft">
         [ {
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="BracketRight">
-
+    <div class="key" data-code="BracketRight">
         ] }
-
     </div>
 
-
-    <div
-        class="key w150"
-        data-code="Backslash">
-
+    <div class="key w150" data-code="Backslash">
         \ |
-
     </div>
-
 
 </div>
 
@@ -1838,15 +1501,9 @@ body.light-theme button.primary {
 
 <div class="key-row">
 
-
-    <div
-        class="key w175"
-        data-code="CapsLock">
-
+    <div class="key w175" data-code="CapsLock">
         Caps Lock
-
     </div>
-
 
     <div class="key" data-code="KeyA">A</div>
     <div class="key" data-code="KeyS">S</div>
@@ -1858,33 +1515,17 @@ body.light-theme button.primary {
     <div class="key" data-code="KeyK">K</div>
     <div class="key" data-code="KeyL">L</div>
 
-
-    <div
-        class="key"
-        data-code="Semicolon">
-
+    <div class="key" data-code="Semicolon">
         ; :
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Quote">
-
+    <div class="key" data-code="Quote">
         ' "
-
     </div>
 
-
-    <div
-        class="key w225"
-        data-code="Enter">
-
+    <div class="key w225" data-code="Enter">
         Enter
-
     </div>
-
 
 </div>
 
@@ -1893,15 +1534,9 @@ body.light-theme button.primary {
 
 <div class="key-row">
 
-
-    <div
-        class="key w225"
-        data-code="ShiftLeft">
-
+    <div class="key w225" data-code="ShiftLeft">
         Shift
-
     </div>
-
 
     <div class="key" data-code="KeyZ">Z</div>
     <div class="key" data-code="KeyX">X</div>
@@ -1911,42 +1546,21 @@ body.light-theme button.primary {
     <div class="key" data-code="KeyN">N</div>
     <div class="key" data-code="KeyM">M</div>
 
-
-    <div
-        class="key"
-        data-code="Comma">
-
+    <div class="key" data-code="Comma">
         , &lt;
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Period">
-
+    <div class="key" data-code="Period">
         . &gt;
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Slash">
-
+    <div class="key" data-code="Slash">
         / ?
-
     </div>
 
-
-    <div
-        class="key w275"
-        data-code="ShiftRight">
-
+    <div class="key w275" data-code="ShiftRight">
         Shift
-
     </div>
-
 
 </div>
 
@@ -1955,189 +1569,111 @@ body.light-theme button.primary {
 
 <div class="key-row">
 
-
-    <div
-        class="key w125"
-        data-code="ControlLeft">
-
+    <div class="key w125" data-code="ControlLeft">
         Ctrl
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="MetaLeft">
-
+    <div class="key w125" data-code="MetaLeft">
         Win
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="AltLeft">
-
+    <div class="key w125" data-code="AltLeft">
         Alt
-
     </div>
 
-
-    <div
-        class="key w625"
-        data-code="Space">
-
+    <div class="key w625" data-code="Space">
         Space
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="AltRight">
-
+    <div class="key w125" data-code="AltRight">
         Alt
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="MetaRight">
-
+    <div class="key w125" data-code="MetaRight">
         Win
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="ContextMenu">
-
+    <div class="key w125" data-code="ContextMenu">
         Menu
-
     </div>
 
-
-    <div
-        class="key w125"
-        data-code="ControlRight">
-
+    <div class="key w125" data-code="ControlRight">
         Ctrl
-
     </div>
-
 
 </div>
-
 
 </div>
 
 
 <!-- =====================================================
-     Right side
+     Right
 ===================================================== -->
 
 <div class="right-side">
 
 
-<!-- Navigation -->
-
 <div class="navigation">
-
 
     <div class="nav-row">
 
-        <div
-            class="key"
-            data-code="Insert">
+        <div class="key" data-code="Insert">
             Ins
         </div>
 
-        <div
-            class="key"
-            data-code="Home">
+        <div class="key" data-code="Home">
             Home
         </div>
 
-        <div
-            class="key"
-            data-code="PageUp">
+        <div class="key" data-code="PageUp">
             PgUp
         </div>
 
     </div>
 
-
     <div class="nav-row">
 
-        <div
-            class="key"
-            data-code="Delete">
+        <div class="key" data-code="Delete">
             Del
         </div>
 
-        <div
-            class="key"
-            data-code="End">
+        <div class="key" data-code="End">
             End
         </div>
 
-        <div
-            class="key"
-            data-code="PageDown">
+        <div class="key" data-code="PageDown">
             PgDn
         </div>
 
     </div>
 
-
     <div style="height:58px"></div>
-
 
     <div class="arrow-row">
 
         <div style="width:64px"></div>
 
-        <div
-            class="key"
-            data-code="ArrowUp">
-
+        <div class="key" data-code="ArrowUp">
             ↑
-
         </div>
 
     </div>
-
 
     <div class="arrow-row">
 
-        <div
-            class="key"
-            data-code="ArrowLeft">
-
+        <div class="key" data-code="ArrowLeft">
             ←
-
         </div>
 
-        <div
-            class="key"
-            data-code="ArrowDown">
-
+        <div class="key" data-code="ArrowDown">
             ↓
-
         </div>
 
-        <div
-            class="key"
-            data-code="ArrowRight">
-
+        <div class="key" data-code="ArrowRight">
             →
-
         </div>
 
     </div>
-
 
 </div>
 
@@ -2146,162 +1682,78 @@ body.light-theme button.primary {
 
 <div class="numpad">
 
-
-    <div
-        class="key"
-        data-code="NumLock">
-
+    <div class="key" data-code="NumLock">
         Num
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="NumpadDivide">
-
+    <div class="key" data-code="NumpadDivide">
         /
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="NumpadMultiply">
-
+    <div class="key" data-code="NumpadMultiply">
         *
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="NumpadSubtract">
-
+    <div class="key" data-code="NumpadSubtract">
         -
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad7">
-
+    <div class="key" data-code="Numpad7">
         7
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad8">
-
+    <div class="key" data-code="Numpad8">
         8
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad9">
-
+    <div class="key" data-code="Numpad9">
         9
-
     </div>
 
-
-    <div
-        class="key numpad-add"
-        data-code="NumpadAdd">
-
+    <div class="key numpad-add" data-code="NumpadAdd">
         +
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad4">
-
+    <div class="key" data-code="Numpad4">
         4
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad5">
-
+    <div class="key" data-code="Numpad5">
         5
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad6">
-
+    <div class="key" data-code="Numpad6">
         6
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad1">
-
+    <div class="key" data-code="Numpad1">
         1
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad2">
-
+    <div class="key" data-code="Numpad2">
         2
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="Numpad3">
-
+    <div class="key" data-code="Numpad3">
         3
-
     </div>
 
-
-    <div
-        class="key numpad-enter"
-        data-code="NumpadEnter">
-
+    <div class="key numpad-enter" data-code="NumpadEnter">
         Enter
-
     </div>
 
-
-    <div
-        class="key numpad-zero"
-        data-code="Numpad0">
-
+    <div class="key numpad-zero" data-code="Numpad0">
         0
-
     </div>
 
-
-    <div
-        class="key"
-        data-code="NumpadDecimal">
-
+    <div class="key" data-code="NumpadDecimal">
         .
-
     </div>
-
 
 </div>
 
+
+</div>
 
 </div>
 
@@ -2316,16 +1768,11 @@ body.light-theme button.primary {
 
 <div class="controls">
 
-
     <div class="sound">
-
         🔊 按键音
-
     </div>
 
-
     <div class="control-right">
-
 
         <select id="soundType">
 
@@ -2359,13 +1806,9 @@ body.light-theme button.primary {
 
         </select>
 
-
         <button id="testSound">
-
             ▶ 测试音效
-
         </button>
-
 
         <button
             id="resetButton"
@@ -2375,19 +1818,16 @@ body.light-theme button.primary {
 
         </button>
 
-
     </div>
-
 
 </div>
 
 
 <!-- =====================================================
-     Information
+     Info
 ===================================================== -->
 
 <div class="info">
-
 
     <div class="info-box">
 
@@ -2439,21 +1879,21 @@ body.light-theme button.primary {
 
     </div>
 
-
 </div>
 
 
 <script>
 
 /* =====================================================
-   Keyboard
+   Keyboard map
 ===================================================== */
 
 const keys = new Map();
 
-
 document
-    .querySelectorAll(".key[data-code]")
+    .querySelectorAll(
+        ".key[data-code]"
+    )
     .forEach(key => {
 
         keys.set(
@@ -2464,9 +1904,13 @@ document
     });
 
 
-const pressedKeys = new Set();
+const pressedKeys =
+    new Set();
 
-const testedKeys = new Set();
+
+const testedKeys =
+    new Set();
+
 
 let pressCount = 0;
 
@@ -2492,7 +1936,6 @@ function initAudio() {
 
     }
 
-
     if (
         audioContext.state ===
         "suspended"
@@ -2511,7 +1954,6 @@ function initAudio() {
 
 const soundPresets = {
 
-
     classic: {
 
         clickFreq: 1450,
@@ -2529,7 +1971,6 @@ const soundPresets = {
         duration: .035,
 
         noise: .035
-
     },
 
 
@@ -2550,7 +1991,6 @@ const soundPresets = {
         duration: .045,
 
         noise: .045
-
     },
 
 
@@ -2571,7 +2011,6 @@ const soundPresets = {
         duration: .075,
 
         noise: .025
-
     },
 
 
@@ -2592,7 +2031,6 @@ const soundPresets = {
         duration: .032,
 
         noise: .09
-
     },
 
 
@@ -2613,7 +2051,6 @@ const soundPresets = {
         duration: .055,
 
         noise: .015
-
     },
 
 
@@ -2634,7 +2071,6 @@ const soundPresets = {
         duration: .04,
 
         noise: .06
-
     }
 
 };
@@ -2646,15 +2082,11 @@ const soundPresets = {
 
 function getKeyType(code) {
 
-
-    if (
-        code === "Space"
-    ) {
+    if (code === "Space") {
 
         return "space";
 
     }
-
 
     if (
         code === "Enter" ||
@@ -2664,7 +2096,6 @@ function getKeyType(code) {
         return "enter";
 
     }
-
 
     if (
         code === "Backspace" ||
@@ -2676,18 +2107,17 @@ function getKeyType(code) {
 
     }
 
-
     return "normal";
-
 }
 
 
 /* =====================================================
-   Play sound
+   Sound
 ===================================================== */
 
-function playKeySound(code = "KeyA") {
-
+function playKeySound(
+    code = "KeyA"
+) {
 
     if (
         soundType === "off"
@@ -2697,12 +2127,13 @@ function playKeySound(code = "KeyA") {
 
     }
 
-
     initAudio();
 
 
     const preset =
-        soundPresets[soundType];
+        soundPresets[
+            soundType
+        ];
 
 
     const keyType =
@@ -2743,7 +2174,7 @@ function playKeySound(code = "KeyA") {
         audioContext.currentTime;
 
 
-    /* 高音 click */
+    /* High frequency click */
 
     const osc =
         audioContext.createOscillator();
@@ -2822,15 +2253,13 @@ function playKeySound(code = "KeyA") {
     osc.start(now);
 
     osc.stop(
-
         now +
         preset.duration +
         .005
-
     );
 
 
-    /* 低频 body */
+    /* Low frequency body */
 
     const body =
         audioContext.createOscillator();
@@ -2858,12 +2287,9 @@ function playKeySound(code = "KeyA") {
         .exponentialRampToValueAtTime(
 
             Math.max(
-
                 25,
-
                 preset.bodyEnd *
                 multiplier
-
             ),
 
             now +
@@ -2916,11 +2342,9 @@ function playKeySound(code = "KeyA") {
     body.start(now);
 
     body.stop(
-
         now +
         preset.duration +
         .005
-
     );
 
 
@@ -2929,7 +2353,6 @@ function playKeySound(code = "KeyA") {
     if (
         preset.noise > 0
     ) {
-
 
         const bufferSize =
 
@@ -2971,11 +2394,13 @@ function playKeySound(code = "KeyA") {
 
 
         const noise =
-            audioContext.createBufferSource();
+            audioContext
+                .createBufferSource();
 
 
         const noiseGain =
-            audioContext.createGain();
+            audioContext
+                .createGain();
 
 
         noise.buffer =
@@ -3020,11 +2445,10 @@ function playKeySound(code = "KeyA") {
 
 
 /* =====================================================
-   Update status
+   Status
 ===================================================== */
 
 function updateStatus() {
-
 
     document.getElementById(
         "testedCount"
@@ -3053,11 +2477,10 @@ function updateStatus() {
 
 
 /* =====================================================
-   Event information
+   Information
 ===================================================== */
 
 function getKeyName(event) {
-
 
     if (
         event.code === "Space"
@@ -3067,7 +2490,6 @@ function getKeyName(event) {
 
     }
 
-
     if (
         event.key.length === 1
     ) {
@@ -3076,14 +2498,11 @@ function getKeyName(event) {
 
     }
 
-
     return event.key;
-
 }
 
 
 function updateInfo(event) {
-
 
     document.getElementById(
         "lastKey"
@@ -3116,41 +2535,53 @@ function updateInfo(event) {
 
 
 /* =====================================================
-   Keyboard DOWN
+   KEY DOWN
 ===================================================== */
 
+/*
+ * capture=true
+ *
+ * 尽可能在页面其它事件处理之前
+ * 截获键盘事件。
+ */
+
 document.addEventListener(
+
     "keydown",
+
     event => {
 
 
-        /* 防止特殊键改变网页 */
+        /*
+         * 阻止浏览器默认行为
+         *
+         * F1
+         * F2
+         * F3
+         * ...
+         * F12
+         * Tab
+         * Space
+         * Backspace
+         * Arrow
+         * Ctrl+C
+         * Ctrl+V
+         * Ctrl+S
+         * Ctrl+F
+         * Alt+Left
+         * 等
+         */
 
-        if (
+        event.preventDefault();
 
-            event.code === "Space" ||
-
-            event.code.startsWith(
-                "Arrow"
-            ) ||
-
-            event.code === "PageUp" ||
-
-            event.code === "PageDown" ||
-
-            event.code === "Home" ||
-
-            event.code === "End"
-
-        ) {
-
-            event.preventDefault();
-
-        }
+        event.stopPropagation();
 
 
         /*
-         * 长按不会重复计算
+         * 第一次按下才计数。
+         *
+         * 长按键盘时浏览器会产生
+         * repeat=true 的 keydown。
          */
 
         if (
@@ -3158,7 +2589,6 @@ document.addEventListener(
                 event.code
             )
         ) {
-
 
             pressedKeys.add(
                 event.code
@@ -3179,6 +2609,10 @@ document.addEventListener(
 
         }
 
+
+        /*
+         * 对应虚拟键盘
+         */
 
         const key =
             keys.get(
@@ -3203,17 +2637,29 @@ document.addEventListener(
 
         updateStatus();
 
+    },
+
+    {
+        capture: true
     }
+
 );
 
 
 /* =====================================================
-   Keyboard UP
+   KEY UP
 ===================================================== */
 
 document.addEventListener(
+
     "keyup",
+
     event => {
+
+
+        event.preventDefault();
+
+        event.stopPropagation();
 
 
         pressedKeys.delete(
@@ -3238,33 +2684,36 @@ document.addEventListener(
 
         updateStatus();
 
+    },
+
+    {
+        capture: true
     }
+
 );
 
 
 /* =====================================================
-   Mouse test
+   Mouse virtual key
 ===================================================== */
 
 document
-    .querySelectorAll(".key")
+    .querySelectorAll(
+        ".key[data-code]"
+    )
     .forEach(key => {
 
 
         key.addEventListener(
             "mousedown",
-            () => {
+            event => {
+
+
+                event.preventDefault();
 
 
                 const code =
                     key.dataset.code;
-
-
-                if (!code) {
-
-                    return;
-
-                }
 
 
                 testedKeys.add(
@@ -3329,7 +2778,7 @@ document
 
 
 /* =====================================================
-   Window blur
+   Blur
 ===================================================== */
 
 window.addEventListener(
@@ -3341,7 +2790,9 @@ window.addEventListener(
 
 
         document
-            .querySelectorAll(".pressed")
+            .querySelectorAll(
+                ".pressed"
+            )
             .forEach(key => {
 
                 key.classList.remove(
@@ -3362,7 +2813,9 @@ window.addEventListener(
 ===================================================== */
 
 document
-    .getElementById("soundType")
+    .getElementById(
+        "soundType"
+    )
     .addEventListener(
         "change",
         event => {
@@ -3377,11 +2830,13 @@ document
 
 
 /* =====================================================
-   Test sound
+   Sound test
 ===================================================== */
 
 document
-    .getElementById("testSound")
+    .getElementById(
+        "testSound"
+    )
     .addEventListener(
         "click",
         () => {
@@ -3399,7 +2854,9 @@ document
 ===================================================== */
 
 document
-    .getElementById("resetButton")
+    .getElementById(
+        "resetButton"
+    )
     .addEventListener(
         "click",
         () => {
@@ -3413,7 +2870,9 @@ document
 
 
             document
-                .querySelectorAll(".key")
+                .querySelectorAll(
+                    ".key"
+                )
                 .forEach(key => {
 
                     key.classList.remove(
@@ -3464,10 +2923,6 @@ const themeToggle =
     );
 
 
-/*
- * 读取之前保存的主题
- */
-
 const savedTheme =
     localStorage.getItem(
         "kbtest-theme"
@@ -3487,8 +2942,6 @@ if (
 
 }
 
-
-/* 切换主题 */
 
 themeToggle.addEventListener(
     "click",
@@ -3527,7 +2980,7 @@ themeToggle.addEventListener(
 
 
 /* =====================================================
-   Unlock audio
+   Audio unlock
 ===================================================== */
 
 document.addEventListener(
@@ -3550,7 +3003,6 @@ document.addEventListener(
 updateStatus();
 
 </script>
-
 
 </body>
 

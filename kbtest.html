@@ -1,0 +1,3557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>键盘按键测试 - HID Wireless</title>
+
+
+<style>
+
+/* =====================================================
+   Base
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    min-height: 100%;
+
+}
+
+
+:root {
+
+    --bg: #0d1015;
+
+    --keyboard: #171b22;
+
+    --key: #282e38;
+
+    --key-top: #303743;
+
+    --border: #414957;
+
+    --text: #e8edf4;
+
+    --muted: #8993a3;
+
+    --green: #39d98a;
+
+    --green-dark: #20b96c;
+
+
+    /* 已测试 */
+
+    --tested-top: #526984;
+
+    --tested-mid: #465a73;
+
+    --tested-bottom: #3b4d64;
+
+    --tested-border: #8296ae;
+
+
+    --unit: 58px;
+
+    --gap: 6px;
+
+}
+
+
+body {
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            #27303e 0,
+            transparent 45%
+        ),
+
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        "Microsoft YaHei",
+        sans-serif;
+
+    padding-bottom: 40px;
+
+}
+
+
+/* =====================================================
+   Top Navigation
+===================================================== */
+
+.topbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    background:
+        rgba(17, 21, 28, .92);
+
+    border-bottom:
+        1px solid #2b323d;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+}
+
+
+.topbar-inner {
+
+    max-width: 1400px;
+
+    min-height: 64px;
+
+    margin: auto;
+
+    padding: 0 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+
+/* =====================================================
+   Brand
+===================================================== */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    white-space: nowrap;
+
+    margin-right: 10px;
+
+}
+
+
+.brand-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #39d98a;
+
+    box-shadow:
+        0 0 10px
+        rgba(57, 217, 138, .55);
+
+}
+
+
+.brand-name {
+
+    color: #f1f4f8;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: .2px;
+
+}
+
+
+.brand-sub {
+
+    color: #7f8998;
+
+    font-size: 13px;
+
+    margin-left: -4px;
+
+}
+
+
+/* =====================================================
+   Navigation
+===================================================== */
+
+.topnav {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    flex: 1;
+
+}
+
+
+.topnav a {
+
+    display: flex;
+
+    align-items: center;
+
+    height: 38px;
+
+    padding: 0 13px;
+
+    border-radius: 7px;
+
+    color: #9da6b4;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    border: 1px solid transparent;
+
+    transition:
+
+        background .15s ease,
+
+        color .15s ease,
+
+        border-color .15s ease;
+
+}
+
+
+.topnav a:hover {
+
+    color: #edf2f7;
+
+    background:
+        rgba(255, 255, 255, .05);
+
+    border-color:
+        rgba(255, 255, 255, .06);
+
+}
+
+
+/* 当前页面 */
+
+.topnav a.active {
+
+    color: #ffffff;
+
+    background:
+        rgba(57, 217, 138, .12);
+
+    border-color:
+        rgba(57, 217, 138, .22);
+
+}
+
+
+/* =====================================================
+   Theme button
+===================================================== */
+
+.topbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-left: auto;
+
+}
+
+
+.icon-btn {
+
+    width: 38px;
+
+    height: 38px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    border: 1px solid #343b47;
+
+    background: #20252d;
+
+    color: #dce2e9;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+.icon-btn:hover {
+
+    background: #2b313b;
+
+    border-color: #4a5362;
+
+}
+
+
+/* =====================================================
+   Header
+===================================================== */
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 32px;
+
+}
+
+
+.header p {
+
+    margin: 8px 0 0;
+
+    color: var(--muted);
+
+}
+
+
+/* =====================================================
+   Status
+===================================================== */
+
+.status {
+
+    width: max-content;
+
+    max-width: 100%;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.status-item {
+
+    min-width: 150px;
+
+    padding: 12px 18px;
+
+    background: var(--keyboard);
+
+    border: 1px solid #292f39;
+
+    border-radius: 10px;
+
+}
+
+
+.status-title {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+.status-value {
+
+    margin-top: 4px;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   Keyboard wrapper
+===================================================== */
+
+.keyboard-wrapper {
+
+    width: max-content;
+
+    max-width: calc(100% - 20px);
+
+    margin: auto;
+
+    overflow-x: auto;
+
+    padding: 22px;
+
+    background: var(--keyboard);
+
+    border: 1px solid #2a3039;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .4);
+
+}
+
+
+.keyboard {
+
+    width: max-content;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--gap);
+
+}
+
+
+/* =====================================================
+   Function row
+===================================================== */
+
+.function-row {
+
+    display: flex;
+
+    gap: var(--gap);
+
+    margin-bottom: 8px;
+
+}
+
+
+.function-row .spacer {
+
+    width:
+        calc(
+            var(--unit) * .5
+        );
+
+}
+
+
+.fgroup {
+
+    display: flex;
+
+    gap: var(--gap);
+
+}
+
+
+/* =====================================================
+   Keyboard body
+===================================================== */
+
+.keyboard-body {
+
+    display: flex;
+
+    gap: 25px;
+
+}
+
+
+.main-keyboard {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--gap);
+
+}
+
+
+.key-row {
+
+    display: flex;
+
+    gap: var(--gap);
+
+}
+
+
+/* =====================================================
+   Key
+===================================================== */
+
+.key {
+
+    width: var(--unit);
+
+    height: var(--unit);
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    border-radius: 7px;
+
+    border: 1px solid var(--border);
+
+    border-bottom: 3px solid #15191f;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            var(--key-top),
+            var(--key)
+        );
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+
+        background .08s,
+
+        transform .05s,
+
+        border-color .08s,
+
+        box-shadow .08s;
+
+}
+
+
+.key:hover {
+
+    border-color: #647082;
+
+}
+
+
+/* =====================================================
+   已测试
+===================================================== */
+
+.key.tested:not(.pressed) {
+
+    background:
+
+        linear-gradient(
+            145deg,
+
+            var(--tested-top) 0%,
+
+            var(--tested-mid) 48%,
+
+            var(--tested-bottom) 100%
+        );
+
+    border-color:
+
+        var(--tested-border);
+
+    color:
+
+        #ffffff;
+
+    box-shadow:
+
+        inset 0 1px 0
+            rgba(255, 255, 255, .18),
+
+        inset 0 -3px 0
+            rgba(0, 0, 0, .22),
+
+        0 2px 7px
+            rgba(40, 65, 95, .28);
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+
+.key.tested:not(.pressed):hover {
+
+    background:
+
+        linear-gradient(
+            145deg,
+
+            #5d7591 0%,
+
+            #506781 48%,
+
+            #43586f 100%
+        );
+
+    border-color:
+
+        #9badc2;
+
+}
+
+
+/* =====================================================
+   当前按下
+===================================================== */
+
+.key.pressed {
+
+    transform:
+
+        translateY(2px);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #48e39a,
+            #20bd70
+        );
+
+    color:
+
+        #06140c;
+
+    border-color:
+
+        #9af4c5;
+
+    box-shadow:
+
+        0 0 18px
+            rgba(57, 217, 138, .45),
+
+        inset 0 1px 0
+            rgba(255, 255, 255, .2);
+
+}
+
+
+/* =====================================================
+   Key widths
+===================================================== */
+
+.w125 {
+
+    width:
+        calc(
+            var(--unit) * 1.25 +
+            var(--gap) * .25
+        );
+
+}
+
+
+.w150 {
+
+    width:
+        calc(
+            var(--unit) * 1.5 +
+            var(--gap) * .5
+        );
+
+}
+
+
+.w175 {
+
+    width:
+        calc(
+            var(--unit) * 1.75 +
+            var(--gap) * .75
+        );
+
+}
+
+
+.w225 {
+
+    width:
+        calc(
+            var(--unit) * 2.25 +
+            var(--gap) * 1.25
+        );
+
+}
+
+
+.w275 {
+
+    width:
+        calc(
+            var(--unit) * 2.75 +
+            var(--gap) * 1.75
+        );
+
+}
+
+
+.w625 {
+
+    width:
+        calc(
+            var(--unit) * 6.25 +
+            var(--gap) * 5.25
+        );
+
+}
+
+
+/* =====================================================
+   Right side
+===================================================== */
+
+.right-side {
+
+    display: flex;
+
+    gap: 25px;
+
+}
+
+
+/* =====================================================
+   Navigation keys
+===================================================== */
+
+.navigation {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--gap);
+
+}
+
+
+.nav-row {
+
+    display: flex;
+
+    gap: var(--gap);
+
+}
+
+
+/* =====================================================
+   Arrows
+===================================================== */
+
+.arrows {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    gap: var(--gap);
+
+}
+
+
+.arrow-row {
+
+    display: flex;
+
+    gap: var(--gap);
+
+}
+
+
+/* =====================================================
+   Numpad
+===================================================== */
+
+.numpad {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, var(--unit));
+
+    grid-template-rows:
+        repeat(5, var(--unit));
+
+    gap: var(--gap);
+
+}
+
+
+.numpad .key {
+
+    width: var(--unit);
+
+}
+
+
+.numpad-add {
+
+    grid-column: 4;
+
+    grid-row: 2 / span 2;
+
+    height:
+        calc(
+            var(--unit) * 2 +
+            var(--gap)
+        );
+
+}
+
+
+.numpad-enter {
+
+    grid-column: 4;
+
+    grid-row: 4 / span 2;
+
+    height:
+        calc(
+            var(--unit) * 2 +
+            var(--gap)
+        );
+
+}
+
+
+.numpad-zero {
+
+    grid-column: 1 / span 2;
+
+    width:
+        calc(
+            var(--unit) * 2 +
+            var(--gap)
+        );
+
+}
+
+
+/* =====================================================
+   Controls
+===================================================== */
+
+.controls {
+
+    max-width: 1200px;
+
+    margin: 18px auto 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 0 10px;
+
+}
+
+
+.control-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.sound {
+
+    color: var(--muted);
+
+}
+
+
+select,
+button {
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    border: 1px solid #3d4552;
+
+    background: #20252d;
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+select:hover,
+button:hover {
+
+    background: #2b313b;
+
+}
+
+
+select {
+
+    min-width: 160px;
+
+}
+
+
+button.primary {
+
+    background:
+
+        var(--green-dark);
+
+    color:
+
+        #06140c;
+
+    border-color:
+
+        var(--green);
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   Information
+===================================================== */
+
+.info {
+
+    max-width: 1200px;
+
+    margin: 15px auto 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    padding: 0 10px;
+
+}
+
+
+.info-box {
+
+    background: var(--keyboard);
+
+    border: 1px solid #292f39;
+
+    border-radius: 9px;
+
+    padding: 12px 15px;
+
+}
+
+
+.info-title {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    margin-bottom: 5px;
+
+}
+
+
+.info-value {
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 14px;
+
+    word-break: break-all;
+
+}
+
+
+/* =====================================================
+   Light theme
+===================================================== */
+
+body.light-theme {
+
+    --bg: #eef1f5;
+
+    --keyboard: #ffffff;
+
+    --key: #e7ebf0;
+
+    --key-top: #f3f5f8;
+
+    --border: #c5ccd6;
+
+    --text: #202631;
+
+    --muted: #687384;
+
+    --tested-top: #8ea6bd;
+
+    --tested-mid: #7e96ae;
+
+    --tested-bottom: #7089a2;
+
+    --tested-border: #5f7892;
+
+}
+
+
+body.light-theme {
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            #ffffff 0,
+            transparent 45%
+        ),
+
+        var(--bg);
+
+}
+
+
+body.light-theme .topbar {
+
+    background:
+        rgba(255, 255, 255, .92);
+
+    border-bottom:
+        1px solid #d6dce4;
+
+}
+
+
+body.light-theme .brand-name {
+
+    color: #202631;
+
+}
+
+
+body.light-theme .topnav a {
+
+    color: #687384;
+
+}
+
+
+body.light-theme .topnav a:hover {
+
+    color: #202631;
+
+    background:
+        rgba(0, 0, 0, .04);
+
+}
+
+
+body.light-theme .topnav a.active {
+
+    color: #16633f;
+
+    background:
+        rgba(57, 217, 138, .12);
+
+    border-color:
+        rgba(57, 217, 138, .3);
+
+}
+
+
+body.light-theme .icon-btn {
+
+    background: #f0f2f5;
+
+    border-color: #ccd3dc;
+
+    color: #303844;
+
+}
+
+
+body.light-theme .icon-btn:hover {
+
+    background: #e4e8ed;
+
+}
+
+
+body.light-theme select,
+body.light-theme button {
+
+    background: #f0f2f5;
+
+    border-color: #ccd3dc;
+
+    color: #202631;
+
+}
+
+
+body.light-theme button.primary {
+
+    background: #39c982;
+
+    color: #062416;
+
+}
+
+
+/* =====================================================
+   Mobile
+===================================================== */
+
+@media(max-width: 1100px) {
+
+    .topbar-inner {
+
+        gap: 12px;
+
+    }
+
+
+    .topnav {
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+    }
+
+
+    .topnav::-webkit-scrollbar {
+
+        display: none;
+
+    }
+
+
+    .topnav a {
+
+        padding: 0 10px;
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+@media(max-width: 800px) {
+
+    body {
+
+        padding-bottom: 25px;
+
+    }
+
+
+    .topbar-inner {
+
+        min-height: 58px;
+
+        padding: 0 12px;
+
+    }
+
+
+    .brand-sub {
+
+        display: none;
+
+    }
+
+
+    .brand {
+
+        margin-right: 0;
+
+    }
+
+
+    .status {
+
+        width: calc(100% - 20px);
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .status-item {
+
+        min-width: 0;
+
+    }
+
+
+    .controls {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .control-right {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .info {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media(max-width: 600px) {
+
+    .brand-name {
+
+        display: none;
+
+    }
+
+
+    .topnav a {
+
+        height: 34px;
+
+        padding: 0 8px;
+
+        font-size: 11px;
+
+    }
+
+
+    .icon-btn {
+
+        width: 34px;
+
+        height: 34px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     顶部导航
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+
+        <div class="brand">
+
+            <span class="brand-dot"></span>
+
+            <span class="brand-name">
+                HID Wireless
+            </span>
+
+            <span class="brand-sub">
+                Receiver
+            </span>
+
+        </div>
+
+
+        <nav class="topnav">
+
+            <a href="shortcuts.html">
+                ⌨️ 键盘快捷键
+            </a>
+
+            <a href="index.html">
+                🔌 有线转无线
+            </a>
+
+            <a href="p42.html">
+                P42 帮助
+            </a>
+
+            <a href="receiver.html">
+                接收器驱动
+            </a>
+
+            <a
+                href="kbtest.html"
+                class="active">
+                按键测试
+            </a>
+
+        </nav>
+
+
+        <div class="topbar-actions">
+
+            <button
+                id="themeToggle"
+                class="icon-btn"
+                title="切换主题">
+
+                🌙
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     Header
+===================================================== -->
+
+<div class="header">
+
+    <h1>
+        ⌨ 键盘按键测试
+    </h1>
+
+    <p>
+        按下实体键盘上的按键，检查每一个按键是否正常工作
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     Status
+===================================================== -->
+
+<div class="status">
+
+
+    <div class="status-item">
+
+        <div class="status-title">
+            最后按键
+        </div>
+
+        <div
+            class="status-value"
+            id="lastKey">
+
+            等待按键
+
+        </div>
+
+    </div>
+
+
+    <div class="status-item">
+
+        <div class="status-title">
+            已测试
+        </div>
+
+        <div class="status-value">
+
+            <span id="testedCount">
+                0
+            </span>
+
+            /
+
+            <span id="totalCount">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="status-item">
+
+        <div class="status-title">
+            按键次数
+        </div>
+
+        <div
+            class="status-value"
+            id="pressCount">
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <div class="status-item">
+
+        <div class="status-title">
+            当前按下
+        </div>
+
+        <div
+            class="status-value"
+            id="pressedCount">
+
+            0
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     Keyboard
+===================================================== -->
+
+<div class="keyboard-wrapper">
+
+
+<div class="keyboard">
+
+
+<!-- =====================================================
+     Function row
+===================================================== -->
+
+<div class="function-row">
+
+
+    <div
+        class="key"
+        data-code="Escape">
+
+        Esc
+
+    </div>
+
+
+    <div class="spacer"></div>
+
+
+    <div class="fgroup">
+
+        <div
+            class="key"
+            data-code="F1">
+            F1
+        </div>
+
+        <div
+            class="key"
+            data-code="F2">
+            F2
+        </div>
+
+        <div
+            class="key"
+            data-code="F3">
+            F3
+        </div>
+
+        <div
+            class="key"
+            data-code="F4">
+            F4
+        </div>
+
+    </div>
+
+
+    <div class="spacer"></div>
+
+
+    <div class="fgroup">
+
+        <div
+            class="key"
+            data-code="F5">
+            F5
+        </div>
+
+        <div
+            class="key"
+            data-code="F6">
+            F6
+        </div>
+
+        <div
+            class="key"
+            data-code="F7">
+            F7
+        </div>
+
+        <div
+            class="key"
+            data-code="F8">
+            F8
+        </div>
+
+    </div>
+
+
+    <div class="spacer"></div>
+
+
+    <div class="fgroup">
+
+        <div
+            class="key"
+            data-code="F9">
+            F9
+        </div>
+
+        <div
+            class="key"
+            data-code="F10">
+            F10
+        </div>
+
+        <div
+            class="key"
+            data-code="F11">
+            F11
+        </div>
+
+        <div
+            class="key"
+            data-code="F12">
+            F12
+        </div>
+
+    </div>
+
+
+    <div class="spacer"></div>
+
+
+    <div class="fgroup">
+
+        <div
+            class="key"
+            data-code="PrintScreen">
+            PrtSc
+        </div>
+
+        <div
+            class="key"
+            data-code="ScrollLock">
+            ScrLk
+        </div>
+
+        <div
+            class="key"
+            data-code="Pause">
+            Pause
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     Keyboard body
+===================================================== -->
+
+<div class="keyboard-body">
+
+
+<div class="main-keyboard">
+
+
+<!-- Number -->
+
+<div class="key-row">
+
+
+    <div
+        class="key"
+        data-code="Backquote">
+
+        ` ~
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Digit1">
+        1
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit2">
+        2
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit3">
+        3
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit4">
+        4
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit5">
+        5
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit6">
+        6
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit7">
+        7
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit8">
+        8
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit9">
+        9
+    </div>
+
+    <div
+        class="key"
+        data-code="Digit0">
+        0
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Minus">
+
+        - _
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Equal">
+
+        = +
+
+    </div>
+
+
+    <div
+        class="key w225"
+        data-code="Backspace">
+
+        Backspace
+
+    </div>
+
+
+</div>
+
+
+<!-- Q -->
+
+<div class="key-row">
+
+
+    <div
+        class="key w150"
+        data-code="Tab">
+
+        Tab
+
+    </div>
+
+
+    <div class="key" data-code="KeyQ">Q</div>
+    <div class="key" data-code="KeyW">W</div>
+    <div class="key" data-code="KeyE">E</div>
+    <div class="key" data-code="KeyR">R</div>
+    <div class="key" data-code="KeyT">T</div>
+    <div class="key" data-code="KeyY">Y</div>
+    <div class="key" data-code="KeyU">U</div>
+    <div class="key" data-code="KeyI">I</div>
+    <div class="key" data-code="KeyO">O</div>
+    <div class="key" data-code="KeyP">P</div>
+
+
+    <div
+        class="key"
+        data-code="BracketLeft">
+
+        [ {
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="BracketRight">
+
+        ] }
+
+    </div>
+
+
+    <div
+        class="key w150"
+        data-code="Backslash">
+
+        \ |
+
+    </div>
+
+
+</div>
+
+
+<!-- A -->
+
+<div class="key-row">
+
+
+    <div
+        class="key w175"
+        data-code="CapsLock">
+
+        Caps Lock
+
+    </div>
+
+
+    <div class="key" data-code="KeyA">A</div>
+    <div class="key" data-code="KeyS">S</div>
+    <div class="key" data-code="KeyD">D</div>
+    <div class="key" data-code="KeyF">F</div>
+    <div class="key" data-code="KeyG">G</div>
+    <div class="key" data-code="KeyH">H</div>
+    <div class="key" data-code="KeyJ">J</div>
+    <div class="key" data-code="KeyK">K</div>
+    <div class="key" data-code="KeyL">L</div>
+
+
+    <div
+        class="key"
+        data-code="Semicolon">
+
+        ; :
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Quote">
+
+        ' "
+
+    </div>
+
+
+    <div
+        class="key w225"
+        data-code="Enter">
+
+        Enter
+
+    </div>
+
+
+</div>
+
+
+<!-- Z -->
+
+<div class="key-row">
+
+
+    <div
+        class="key w225"
+        data-code="ShiftLeft">
+
+        Shift
+
+    </div>
+
+
+    <div class="key" data-code="KeyZ">Z</div>
+    <div class="key" data-code="KeyX">X</div>
+    <div class="key" data-code="KeyC">C</div>
+    <div class="key" data-code="KeyV">V</div>
+    <div class="key" data-code="KeyB">B</div>
+    <div class="key" data-code="KeyN">N</div>
+    <div class="key" data-code="KeyM">M</div>
+
+
+    <div
+        class="key"
+        data-code="Comma">
+
+        , &lt;
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Period">
+
+        . &gt;
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Slash">
+
+        / ?
+
+    </div>
+
+
+    <div
+        class="key w275"
+        data-code="ShiftRight">
+
+        Shift
+
+    </div>
+
+
+</div>
+
+
+<!-- Bottom -->
+
+<div class="key-row">
+
+
+    <div
+        class="key w125"
+        data-code="ControlLeft">
+
+        Ctrl
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="MetaLeft">
+
+        Win
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="AltLeft">
+
+        Alt
+
+    </div>
+
+
+    <div
+        class="key w625"
+        data-code="Space">
+
+        Space
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="AltRight">
+
+        Alt
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="MetaRight">
+
+        Win
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="ContextMenu">
+
+        Menu
+
+    </div>
+
+
+    <div
+        class="key w125"
+        data-code="ControlRight">
+
+        Ctrl
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     Right side
+===================================================== -->
+
+<div class="right-side">
+
+
+<!-- Navigation -->
+
+<div class="navigation">
+
+
+    <div class="nav-row">
+
+        <div
+            class="key"
+            data-code="Insert">
+            Ins
+        </div>
+
+        <div
+            class="key"
+            data-code="Home">
+            Home
+        </div>
+
+        <div
+            class="key"
+            data-code="PageUp">
+            PgUp
+        </div>
+
+    </div>
+
+
+    <div class="nav-row">
+
+        <div
+            class="key"
+            data-code="Delete">
+            Del
+        </div>
+
+        <div
+            class="key"
+            data-code="End">
+            End
+        </div>
+
+        <div
+            class="key"
+            data-code="PageDown">
+            PgDn
+        </div>
+
+    </div>
+
+
+    <div style="height:58px"></div>
+
+
+    <div class="arrow-row">
+
+        <div style="width:64px"></div>
+
+        <div
+            class="key"
+            data-code="ArrowUp">
+
+            ↑
+
+        </div>
+
+    </div>
+
+
+    <div class="arrow-row">
+
+        <div
+            class="key"
+            data-code="ArrowLeft">
+
+            ←
+
+        </div>
+
+        <div
+            class="key"
+            data-code="ArrowDown">
+
+            ↓
+
+        </div>
+
+        <div
+            class="key"
+            data-code="ArrowRight">
+
+            →
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- Numpad -->
+
+<div class="numpad">
+
+
+    <div
+        class="key"
+        data-code="NumLock">
+
+        Num
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="NumpadDivide">
+
+        /
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="NumpadMultiply">
+
+        *
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="NumpadSubtract">
+
+        -
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad7">
+
+        7
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad8">
+
+        8
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad9">
+
+        9
+
+    </div>
+
+
+    <div
+        class="key numpad-add"
+        data-code="NumpadAdd">
+
+        +
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad4">
+
+        4
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad5">
+
+        5
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad6">
+
+        6
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad1">
+
+        1
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad2">
+
+        2
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="Numpad3">
+
+        3
+
+    </div>
+
+
+    <div
+        class="key numpad-enter"
+        data-code="NumpadEnter">
+
+        Enter
+
+    </div>
+
+
+    <div
+        class="key numpad-zero"
+        data-code="Numpad0">
+
+        0
+
+    </div>
+
+
+    <div
+        class="key"
+        data-code="NumpadDecimal">
+
+        .
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     Controls
+===================================================== -->
+
+<div class="controls">
+
+
+    <div class="sound">
+
+        🔊 按键音
+
+    </div>
+
+
+    <div class="control-right">
+
+
+        <select id="soundType">
+
+            <option value="classic">
+                Classic 清脆
+            </option>
+
+            <option value="mechanical">
+                Mechanical 机械
+            </option>
+
+            <option value="thock">
+                Thock 低沉
+            </option>
+
+            <option value="clicky">
+                Clicky 青轴
+            </option>
+
+            <option value="soft">
+                Soft 柔和
+            </option>
+
+            <option value="retro">
+                Retro 复古
+            </option>
+
+            <option value="off">
+                🔇 静音
+            </option>
+
+        </select>
+
+
+        <button id="testSound">
+
+            ▶ 测试音效
+
+        </button>
+
+
+        <button
+            id="resetButton"
+            class="primary">
+
+            ↻ 重置测试
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     Information
+===================================================== -->
+
+<div class="info">
+
+
+    <div class="info-box">
+
+        <div class="info-title">
+            event.code
+        </div>
+
+        <div
+            class="info-value"
+            id="eventCode">
+
+            -
+
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-title">
+            event.key
+        </div>
+
+        <div
+            class="info-value"
+            id="eventKey">
+
+            -
+
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-title">
+            KeyboardEvent
+        </div>
+
+        <div
+            class="info-value"
+            id="eventInfo">
+
+            -
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   Keyboard
+===================================================== */
+
+const keys = new Map();
+
+
+document
+    .querySelectorAll(".key[data-code]")
+    .forEach(key => {
+
+        keys.set(
+            key.dataset.code,
+            key
+        );
+
+    });
+
+
+const pressedKeys = new Set();
+
+const testedKeys = new Set();
+
+let pressCount = 0;
+
+
+/* =====================================================
+   Audio
+===================================================== */
+
+let audioContext = null;
+
+let soundType = "classic";
+
+
+function initAudio() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    if (
+        audioContext.state ===
+        "suspended"
+    ) {
+
+        audioContext.resume();
+
+    }
+
+}
+
+
+/* =====================================================
+   Sound presets
+===================================================== */
+
+const soundPresets = {
+
+
+    classic: {
+
+        clickFreq: 1450,
+
+        endFreq: 500,
+
+        clickGain: .14,
+
+        bodyFreq: 190,
+
+        bodyEnd: 80,
+
+        bodyGain: .055,
+
+        duration: .035,
+
+        noise: .035
+
+    },
+
+
+    mechanical: {
+
+        clickFreq: 1750,
+
+        endFreq: 600,
+
+        clickGain: .19,
+
+        bodyFreq: 160,
+
+        bodyEnd: 65,
+
+        bodyGain: .09,
+
+        duration: .045,
+
+        noise: .045
+
+    },
+
+
+    thock: {
+
+        clickFreq: 850,
+
+        endFreq: 250,
+
+        clickGain: .07,
+
+        bodyFreq: 105,
+
+        bodyEnd: 48,
+
+        bodyGain: .20,
+
+        duration: .075,
+
+        noise: .025
+
+    },
+
+
+    clicky: {
+
+        clickFreq: 2600,
+
+        endFreq: 900,
+
+        clickGain: .28,
+
+        bodyFreq: 220,
+
+        bodyEnd: 90,
+
+        bodyGain: .055,
+
+        duration: .032,
+
+        noise: .09
+
+    },
+
+
+    soft: {
+
+        clickFreq: 650,
+
+        endFreq: 200,
+
+        clickGain: .035,
+
+        bodyFreq: 150,
+
+        bodyEnd: 70,
+
+        bodyGain: .07,
+
+        duration: .055,
+
+        noise: .015
+
+    },
+
+
+    retro: {
+
+        clickFreq: 1900,
+
+        endFreq: 300,
+
+        clickGain: .16,
+
+        bodyFreq: 300,
+
+        bodyEnd: 100,
+
+        bodyGain: .06,
+
+        duration: .04,
+
+        noise: .06
+
+    }
+
+};
+
+
+/* =====================================================
+   Key type
+===================================================== */
+
+function getKeyType(code) {
+
+
+    if (
+        code === "Space"
+    ) {
+
+        return "space";
+
+    }
+
+
+    if (
+        code === "Enter" ||
+        code === "NumpadEnter"
+    ) {
+
+        return "enter";
+
+    }
+
+
+    if (
+        code === "Backspace" ||
+        code === "ShiftLeft" ||
+        code === "ShiftRight"
+    ) {
+
+        return "large";
+
+    }
+
+
+    return "normal";
+
+}
+
+
+/* =====================================================
+   Play sound
+===================================================== */
+
+function playKeySound(code = "KeyA") {
+
+
+    if (
+        soundType === "off"
+    ) {
+
+        return;
+
+    }
+
+
+    initAudio();
+
+
+    const preset =
+        soundPresets[soundType];
+
+
+    const keyType =
+        getKeyType(code);
+
+
+    let multiplier = 1;
+
+
+    if (
+        keyType === "large"
+    ) {
+
+        multiplier = .82;
+
+    }
+
+
+    if (
+        keyType === "enter"
+    ) {
+
+        multiplier = .72;
+
+    }
+
+
+    if (
+        keyType === "space"
+    ) {
+
+        multiplier = .55;
+
+    }
+
+
+    const now =
+        audioContext.currentTime;
+
+
+    /* 高音 click */
+
+    const osc =
+        audioContext.createOscillator();
+
+
+    const gain =
+        audioContext.createGain();
+
+
+    osc.type =
+        soundType === "thock"
+            ? "triangle"
+            : "square";
+
+
+    osc.frequency.setValueAtTime(
+
+        preset.clickFreq *
+        multiplier,
+
+        now
+
+    );
+
+
+    osc.frequency
+        .exponentialRampToValueAtTime(
+
+            Math.max(
+                40,
+                preset.endFreq *
+                multiplier
+            ),
+
+            now +
+            preset.duration
+
+        );
+
+
+    gain.gain.setValueAtTime(
+        .0001,
+        now
+    );
+
+
+    gain.gain
+        .exponentialRampToValueAtTime(
+
+            preset.clickGain *
+            multiplier,
+
+            now + .001
+
+        );
+
+
+    gain.gain
+        .exponentialRampToValueAtTime(
+
+            .0001,
+
+            now +
+            preset.duration
+
+        );
+
+
+    osc.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+
+    osc.start(now);
+
+    osc.stop(
+
+        now +
+        preset.duration +
+        .005
+
+    );
+
+
+    /* 低频 body */
+
+    const body =
+        audioContext.createOscillator();
+
+
+    const bodyGain =
+        audioContext.createGain();
+
+
+    body.type =
+        "triangle";
+
+
+    body.frequency.setValueAtTime(
+
+        preset.bodyFreq *
+        multiplier,
+
+        now
+
+    );
+
+
+    body.frequency
+        .exponentialRampToValueAtTime(
+
+            Math.max(
+
+                25,
+
+                preset.bodyEnd *
+                multiplier
+
+            ),
+
+            now +
+            preset.duration
+
+        );
+
+
+    bodyGain.gain.setValueAtTime(
+
+        .0001,
+
+        now
+
+    );
+
+
+    bodyGain.gain
+        .exponentialRampToValueAtTime(
+
+            preset.bodyGain *
+            multiplier,
+
+            now + .001
+
+        );
+
+
+    bodyGain.gain
+        .exponentialRampToValueAtTime(
+
+            .0001,
+
+            now +
+            preset.duration
+
+        );
+
+
+    body.connect(
+        bodyGain
+    );
+
+
+    bodyGain.connect(
+        audioContext.destination
+    );
+
+
+    body.start(now);
+
+    body.stop(
+
+        now +
+        preset.duration +
+        .005
+
+    );
+
+
+    /* Noise */
+
+    if (
+        preset.noise > 0
+    ) {
+
+
+        const bufferSize =
+
+            Math.floor(
+
+                audioContext.sampleRate *
+                .025
+
+            );
+
+
+        const buffer =
+
+            audioContext.createBuffer(
+
+                1,
+
+                bufferSize,
+
+                audioContext.sampleRate
+
+            );
+
+
+        const data =
+            buffer.getChannelData(0);
+
+
+        for (
+            let i = 0;
+            i < bufferSize;
+            i++
+        ) {
+
+            data[i] =
+                Math.random() * 2 - 1;
+
+        }
+
+
+        const noise =
+            audioContext.createBufferSource();
+
+
+        const noiseGain =
+            audioContext.createGain();
+
+
+        noise.buffer =
+            buffer;
+
+
+        noiseGain.gain.setValueAtTime(
+
+            preset.noise *
+            multiplier,
+
+            now
+
+        );
+
+
+        noiseGain.gain
+            .exponentialRampToValueAtTime(
+
+                .0001,
+
+                now + .025
+
+            );
+
+
+        noise.connect(
+            noiseGain
+        );
+
+
+        noiseGain.connect(
+            audioContext.destination
+        );
+
+
+        noise.start(now);
+
+    }
+
+}
+
+
+/* =====================================================
+   Update status
+===================================================== */
+
+function updateStatus() {
+
+
+    document.getElementById(
+        "testedCount"
+    ).textContent =
+        testedKeys.size;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        keys.size;
+
+
+    document.getElementById(
+        "pressCount"
+    ).textContent =
+        pressCount;
+
+
+    document.getElementById(
+        "pressedCount"
+    ).textContent =
+        pressedKeys.size;
+
+}
+
+
+/* =====================================================
+   Event information
+===================================================== */
+
+function getKeyName(event) {
+
+
+    if (
+        event.code === "Space"
+    ) {
+
+        return "Space";
+
+    }
+
+
+    if (
+        event.key.length === 1
+    ) {
+
+        return event.key.toUpperCase();
+
+    }
+
+
+    return event.key;
+
+}
+
+
+function updateInfo(event) {
+
+
+    document.getElementById(
+        "lastKey"
+    ).textContent =
+        getKeyName(event);
+
+
+    document.getElementById(
+        "eventCode"
+    ).textContent =
+        event.code;
+
+
+    document.getElementById(
+        "eventKey"
+    ).textContent =
+        event.key;
+
+
+    document.getElementById(
+        "eventInfo"
+    ).textContent =
+
+        "keyCode=" +
+        event.keyCode +
+        ", repeat=" +
+        event.repeat;
+
+}
+
+
+/* =====================================================
+   Keyboard DOWN
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+
+        /* 防止特殊键改变网页 */
+
+        if (
+
+            event.code === "Space" ||
+
+            event.code.startsWith(
+                "Arrow"
+            ) ||
+
+            event.code === "PageUp" ||
+
+            event.code === "PageDown" ||
+
+            event.code === "Home" ||
+
+            event.code === "End"
+
+        ) {
+
+            event.preventDefault();
+
+        }
+
+
+        /*
+         * 长按不会重复计算
+         */
+
+        if (
+            !pressedKeys.has(
+                event.code
+            )
+        ) {
+
+
+            pressedKeys.add(
+                event.code
+            );
+
+
+            testedKeys.add(
+                event.code
+            );
+
+
+            pressCount++;
+
+
+            playKeySound(
+                event.code
+            );
+
+        }
+
+
+        const key =
+            keys.get(
+                event.code
+            );
+
+
+        if (key) {
+
+            key.classList.add(
+                "pressed"
+            );
+
+            key.classList.add(
+                "tested"
+            );
+
+        }
+
+
+        updateInfo(event);
+
+        updateStatus();
+
+    }
+);
+
+
+/* =====================================================
+   Keyboard UP
+===================================================== */
+
+document.addEventListener(
+    "keyup",
+    event => {
+
+
+        pressedKeys.delete(
+            event.code
+        );
+
+
+        const key =
+            keys.get(
+                event.code
+            );
+
+
+        if (key) {
+
+            key.classList.remove(
+                "pressed"
+            );
+
+        }
+
+
+        updateStatus();
+
+    }
+);
+
+
+/* =====================================================
+   Mouse test
+===================================================== */
+
+document
+    .querySelectorAll(".key")
+    .forEach(key => {
+
+
+        key.addEventListener(
+            "mousedown",
+            () => {
+
+
+                const code =
+                    key.dataset.code;
+
+
+                if (!code) {
+
+                    return;
+
+                }
+
+
+                testedKeys.add(
+                    code
+                );
+
+
+                pressCount++;
+
+
+                key.classList.add(
+                    "pressed"
+                );
+
+
+                key.classList.add(
+                    "tested"
+                );
+
+
+                playKeySound(
+                    code
+                );
+
+
+                document.getElementById(
+                    "lastKey"
+                ).textContent =
+                    key.textContent.trim();
+
+
+                updateStatus();
+
+            }
+        );
+
+
+        key.addEventListener(
+            "mouseup",
+            () => {
+
+                key.classList.remove(
+                    "pressed"
+                );
+
+            }
+        );
+
+
+        key.addEventListener(
+            "mouseleave",
+            () => {
+
+                key.classList.remove(
+                    "pressed"
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   Window blur
+===================================================== */
+
+window.addEventListener(
+    "blur",
+    () => {
+
+
+        pressedKeys.clear();
+
+
+        document
+            .querySelectorAll(".pressed")
+            .forEach(key => {
+
+                key.classList.remove(
+                    "pressed"
+                );
+
+            });
+
+
+        updateStatus();
+
+    }
+);
+
+
+/* =====================================================
+   Sound selector
+===================================================== */
+
+document
+    .getElementById("soundType")
+    .addEventListener(
+        "change",
+        event => {
+
+            soundType =
+                event.target.value;
+
+            initAudio();
+
+        }
+    );
+
+
+/* =====================================================
+   Test sound
+===================================================== */
+
+document
+    .getElementById("testSound")
+    .addEventListener(
+        "click",
+        () => {
+
+            playKeySound(
+                "KeyA"
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   Reset
+===================================================== */
+
+document
+    .getElementById("resetButton")
+    .addEventListener(
+        "click",
+        () => {
+
+
+            testedKeys.clear();
+
+            pressedKeys.clear();
+
+            pressCount = 0;
+
+
+            document
+                .querySelectorAll(".key")
+                .forEach(key => {
+
+                    key.classList.remove(
+                        "pressed",
+                        "tested"
+                    );
+
+                });
+
+
+            document.getElementById(
+                "lastKey"
+            ).textContent =
+                "等待按键";
+
+
+            document.getElementById(
+                "eventCode"
+            ).textContent =
+                "-";
+
+
+            document.getElementById(
+                "eventKey"
+            ).textContent =
+                "-";
+
+
+            document.getElementById(
+                "eventInfo"
+            ).textContent =
+                "-";
+
+
+            updateStatus();
+
+        }
+    );
+
+
+/* =====================================================
+   Theme
+===================================================== */
+
+const themeToggle =
+    document.getElementById(
+        "themeToggle"
+    );
+
+
+/*
+ * 读取之前保存的主题
+ */
+
+const savedTheme =
+    localStorage.getItem(
+        "kbtest-theme"
+    );
+
+
+if (
+    savedTheme === "light"
+) {
+
+    document.body.classList.add(
+        "light-theme"
+    );
+
+    themeToggle.textContent =
+        "☀️";
+
+}
+
+
+/* 切换主题 */
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+
+        document.body.classList.toggle(
+            "light-theme"
+        );
+
+
+        const isLight =
+            document.body.classList.contains(
+                "light-theme"
+            );
+
+
+        themeToggle.textContent =
+            isLight
+                ? "☀️"
+                : "🌙";
+
+
+        localStorage.setItem(
+
+            "kbtest-theme",
+
+            isLight
+                ? "light"
+                : "dark"
+
+        );
+
+    }
+);
+
+
+/* =====================================================
+   Unlock audio
+===================================================== */
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+
+        initAudio();
+
+    },
+    {
+        once: true
+    }
+);
+
+
+/* =====================================================
+   Init
+===================================================== */
+
+updateStatus();
+
+</script>
+
+
+</body>
+
+</html>

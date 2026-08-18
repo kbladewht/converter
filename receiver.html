@@ -1,484 +1,115 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html lang="utf-8">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>HID Wireless Converter</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-
-            margin: 0;
-            padding: 0;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            height: 100vh;
-
-            color: #333;
-        }
-
-
-        h1 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-
-
-        /* connect/send */
-
-        #connect,
-        #send {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-
-        }
-        #connect:hover,
-        #send:hover {
-            background-color: #45a049;
-        }
-
-        #log {
-
-            width: 80%;
-            max-width: 600px;
-            height: 200px;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: white;
-            resize: none;
-        }
-
-        #input {
-
-            width: 80%;
-            max-width: 600px;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        .preset-buttons {
-
-            width: 80%;
-            max-width: 600px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .cmd {
-            min-width: 90px;
-            height: 38px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .cmd:hover {
-            opacity: 0.8;
-        }
-        .cmd-system {
-            background: #4CAF50;
-        }
-
-        .cmd-channel {
-            background: #2196F3;
-        }
-
-        button:focus,
-        input:focus,
-        textarea:focus {
-            outline: none;
-            box-shadow: 0 0 5px #4CAF50;
-        }
-
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;  /* 原来是 center，改成 flex-start */
-    height: 100vh;
-    color: #333;
-}
-    </style>
-
+    <title>HID Wireless Converter · Receiver</title>
+    <link rel="stylesheet" href="r.css">
 </head>
+<body>
 
+<!-- 顶部导航 -->
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <span class="brand-dot"></span>
+            <span class="brand-name">HID Wireless</span>
+            <span class="brand-sub">Receiver</span>
+        </div>
+        <nav class="topnav">
+            <a href="shortcuts.html">⌨️ 键盘快捷键</a>
+            <a href="index.html">🔌 有线转无线</a>
+            <a href="p42.html">P42 帮助</a>
+            <a href="receiver.html" class="active">接收器驱动</a>
+        </nav>
+        <div class="topbar-actions">
+            <button id="themeToggle" class="icon-btn" title="切换主题">🌙</button>
+        </div>
+    </div>
+</header>
 
-<body >
+<div class="layout">
 
-<!-- 导航栏 -->
-<div id="navbar-placeholder" class="navbar" style="display: flex; justify-content: flex-start; background-color: #333; width: 100%;">
+    <!-- 左侧边栏 -->
+    <aside class="sidebar">
+
+        <!-- 连接状态卡片 -->
+        <section class="card">
+            <div class="card-head">
+                <span class="card-title">串口连接</span>
+                <span id="connStatus" class="status status-off">未连接</span>
+            </div>
+            <button id="connect" class="btn btn-primary btn-block">连接串口</button>
+        </section>
+
+     <!-- 接收器地址卡片 -->
+<section class="card">
+    <div class="card-head">
+        <span class="card-title">接收器地址</span>
+    </div>
+    <div class="radio-group">
+        <label class="radio-pill">
+            <input type="radio" name="channel" value="1" checked>
+            <span>地址 A</span>
+        </label>
+        <label class="radio-pill">
+            <input type="radio" name="channel" value="2">
+            <span>地址 B</span>
+        </label>
+    </div>
+</section>
+
+<!-- 电池电量卡片（新增） -->
+<section class="card battery-card">
+    <div class="card-head">
+        <span class="card-title">🔋 电池电量</span>
+        <span id="batteryValue" class="battery-percent">--%</span>
+    </div>
+    <div class="battery-body">
+        <div class="battery-icon">
+            <div class="battery-level" id="batteryLevel" style="width: 0%;"></div>
+        </div>
+        <div class="battery-info">
+            <span id="batteryStatus" class="battery-status">等待查询…</span>
+        </div>
+    </div>
+    <button class="cmd cmd-channel btn-block" data-cmd="adc_measure">🔄 刷新电量</button>
+</section>
+
+        <!-- 快捷命令卡片 -->
+        <section class="card">
+            <div class="card-head">
+                <span class="card-title">快捷命令</span>
+            </div>
+            <div class="cmd-grid">
+                <button class="cmd cmd-system" data-cmd="nordic">NORDIC 测试</button>
+                <button class="cmd cmd-system" data-cmd="bootloader_jump">进入刷机模式</button>
+                <button class="cmd cmd-system" data-cmd="logqf open">打开日志</button>
+                <button class="cmd cmd-system" data-cmd="logqf close">关闭日志</button>
+            </div>
+        </section>
+
+    </aside>
+
+    <!-- 主区域：终端 -->
+    <main class="terminal-pane">
+        <div class="terminal-bar">
+            <span class="terminal-title">终端输出</span>
+            <div class="terminal-actions">
+                <button id="clearLog" class="btn btn-ghost btn-sm">清空</button>
+                <button id="exportLog" class="btn btn-ghost btn-sm">导出</button>
+            </div>
+        </div>
+        <textarea id="log" rows="20" placeholder="等待串口数据…" readonly></textarea>
+
+        <div class="sendbar">
+            <input id="input" type="text" placeholder="输入命令后回车发送…">
+            <button id="send" class="btn btn-primary">发送</button>
+        </div>
+    </main>
+
 </div>
 
-
-    <h1>Receiver</h1>
-
-    <button id="connect">
-        Connect Device
-    </button>
-
-    <textarea id="log" rows="10"></textarea>
-
-    <div class="preset-buttons">
-
-        <button class="cmd cmd-system" data-cmd="help">
-            HELP
-        </button>
-
-        <button class="cmd cmd-system" data-cmd="reset">
-            RESET
-        </button>
-
-        <button class="cmd cmd-system" data-cmd="dfu">
-            DFU
-        </button>
-    </div>
-
-    <div class="preset-buttons">
-
-        <button class="cmd cmd-channel" data-cmd="channel 0">
-            显示电量
-        </button>
-
-    </div>
-
-
-    <script>
-        let port = null;
-        let reader = null;
-        let writer = null;
-
-        let reconnectTimer = null;
-        let isConnecting = false;
-        let firstConnect = true;
-
-        const logElement = document.getElementById("log");
-        const connectBtn = document.getElementById("connect");
-        async function sendCommand(cmd) {
-
-            if (!writer) {
-                alert("Please connect first.");
-                return;
-            }
-            await writer.write(
-                new TextEncoder().encode(cmd + "\n")
-            );
-
-        }
-        
-
-      let ansiBuffer = "";
-
-        async function readData() {
-            try {
-                const decoder = new TextDecoder();
-
-                while (true) {
-                    const { value, done } = await reader.read();
-
-                    if (done)
-                        break;
-
-                    ansiBuffer += decoder.decode(value, { stream: true });
-
-                    // 没收到完整一行，继续接收
-                    if (!ansiBuffer.includes('\n')) {
-                        continue;
-                    }
-
-                     console.log('ss:', ansiBuffer);
-
-                
-                    ansiBuffer = ansiBuffer.replace(/\x1B(?:[@-_]|\[[0-?]*[ -/]*[@-~])/g, '');
-                    ansiBuffer = ansiBuffer.replace(/1DJ/g, '');
-                    ansiBuffer = ansiBuffer.replace(/1DJ/g, '');
-                    ansiBuffer = ansiBuffer.replace(/[\r]/g, '');
-
-                    logElement.value += ansiBuffer;
-                    ansiBuffer = "";
-
-                    logElement.scrollTop = logElement.scrollHeight;
-                }
-            }
-            catch (e) {
-                console.log("UART disconnected", e);
-                uartDisconnected();
-            }
-        }
-     
-        async function openUART(forceSelect=false)
-{
-    if(isConnecting)
-        return;
-
-
-    isConnecting=true;
-
-
-    try
-    {
-
-        if(forceSelect)
-        {
-            // 强制弹出选择框
-            port =
-                await navigator.serial.requestPort();
-        }
-        else
-        {
-            let ports =
-                await navigator.serial.getPorts();
-
-
-            if(ports.length > 0)
-            {
-                port=ports[0];
-            }
-            else
-            {
-                port =
-                    await navigator.serial.requestPort();
-            }
-        }
-
-
-
-        await port.open({
-            baudRate:115200
-        });
-
-
-
-        writer =
-            port.writable.getWriter();
-
-
-        reader =
-            port.readable.getReader();
-
-
-
-        connectBtn.innerText =
-            "UART Connected";
-
-
-        isConnecting=false;
-
-
-        readData();
-
-
-    }
-    catch(e)
-    {
-
-        console.log("open uart fail",e);
-
-
-        port=null;
-        reader=null;
-        writer=null;
-
-
-        isConnecting=false;
-
-    }
-
-}
-
-        function startReconnect() {
-
-            if (reconnectTimer)
-                return;
-
-            reconnectTimer = setInterval(async () => {
-
-                if (port) {
-                    clearInterval(reconnectTimer);
-                    reconnectTimer = null;
-                    return;
-                }
-                console.log("try reconnect");
-                await openUART();
-
-            }, 1000);
-        }
-
-        async function closeUART() {
-
-            try {
-                if (reader) {
-                    await reader.cancel();
-                    reader.releaseLock();
-                }
-                if (writer) {
-                    writer.releaseLock();
-                }
-                if (port) {
-                    await port.close();
-                }
-            }catch (e) {
-                console.log(e);
-            }
-
-            reader = null;
-            writer = null;
-            port = null;
-
-            connectBtn.innerText ="Connect UART";
-
-        }
-        async function uartDisconnected() {
-
-            try {
-
-                if (reader) {
-                    await reader.cancel();
-                    reader.releaseLock();
-                }
-
-                if (writer) {
-                    writer.releaseLock();
-                }
-            }
-            catch (e) {
-            }
-
-            reader = null;
-            writer = null;
-            port = null;
-            connectBtn.innerText = "Connect UART";
-            startReconnect();
-        }
-
-     connectBtn.onclick =
-        async function()
-        {   
-
-            if(port)
-            {
-                await closeUART();
-            }
-            else
-            {
-                await openUART(true);
-            }
-
-    };
-
- 
-        document.querySelectorAll(".cmd")
-            .forEach(btn => {
-                btn.onclick =
-                    async function () {
-                        await sendCommand(
-                            btn.dataset.cmd
-                        );
-                    };
-            });
-
-
-
-
-        window.onbeforeunload =
-            async function () {
-                await closeUART();
-            };
-
-        navigator.serial.addEventListener(
-            "disconnect",
-            event => {
-                if (event.target === port) {
-                    console.log("Device disconnected");
-                    uartDisconnected();
-                }
-            }
-        );
-
-        async function autoReconnect() {
-            if (port)
-                return;
-
-            try {
-                let ports = await navigator.serial.getPorts();
-
-                if (ports.length > 0) {
-                    console.log("Try reconnect UART");
-
-                    port = ports[0];
-                    await port.open({
-                        baudRate: 115200
-                    });
-
-
-                    writer = port.writable.getWriter();
-                    reader = port.readable.getReader();
-                    connectBtn.innerText = "UART Connected";
-
-                    readData();
-
-                    console.log("UART reconnect success");
-
-                    return;
-                }
-
-            }catch (e) {
-                console.log("Reconnect failed");
-            }
-            reconnectTimer =setTimeout(autoReconnect, 1000);
-
-        }
-
-
-
-      fetch('navbar.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('navbar-placeholder').innerHTML = data;
-    
-    // 获取当前页面文件名（如 index.html、shortcuts.html）
-    var currentPage = window.location.pathname.split('/').pop();
-    // 如果路径末尾没有文件名（比如直接访问域名），默认 index.html
-    if (!currentPage || currentPage.indexOf('.') === -1) {
-      currentPage = 'receiver.html';
-    }
-    
-    // 遍历所有导航链接，匹配高亮
-    var navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(function(item) {
-      if (item.getAttribute('href') === currentPage) {
-        item.style.backgroundColor = '#4CAF50';
-        item.style.borderBottom = '3px solid #2E7D32';
-      }
-    });
-  });
-    </script>
-
+<script src="r.js"></script>
 </body>
 </html>

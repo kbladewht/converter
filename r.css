@@ -1,0 +1,221 @@
+:root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --border: #e4e6eb;
+    --text: #1c1e21;
+    --text-muted: #65676b;
+    --primary: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --success: #2e7d32;
+    --danger: #d93025;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --topbar-h: 52px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ============ 顶部导航 ============ */
+.topbar {
+    height: var(--topbar-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 50;
+}
+.topbar-inner {
+    max-width: 1400px; margin: 0 auto; height: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
+.brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--primary); display: inline-block; }
+.brand-sub { color: var(--text-muted); font-weight: 500; font-size: 13px; margin-left: 4px; }
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+    padding: 8px 14px; border-radius: 8px; color: var(--text-muted);
+    text-decoration: none; font-size: 14px; font-weight: 500; transition: all .15s;
+}
+.topnav a:hover { background: #f0f2f5; color: var(--text); }
+.topnav a.active { background: var(--primary); color: #fff; }
+.icon-btn {
+    width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); cursor: pointer; font-size: 16px;
+}
+.icon-btn:hover { background: #f0f2f5; }
+
+/* ============ 布局 ============ */
+.layout {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 300px 1fr; gap: 18px;
+    padding: 18px;
+}
+
+/* ============ 侧边栏卡片 ============ */
+.sidebar { display: flex; flex-direction: column; gap: 14px; }
+.card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px;
+}
+.card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+}
+.card-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* 状态徽标 */
+.status {
+    font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+}
+.status-off { background: #fde7e9; color: var(--danger); }
+.status-on  { background: #e6f4ea; color: var(--success); }
+
+/* 表单 */
+.form-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.form-row label { font-size: 13px; color: var(--text-muted); width: 56px; }
+.form-control {
+    flex: 1; height: 34px; border: 1px solid var(--border); border-radius: 8px;
+    padding: 0 10px; font-size: 13px; background: #fff; color: var(--text);
+}
+.form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(13,110,253,.15); }
+
+/* 按钮 */
+.btn {
+    height: 36px; padding: 0 16px; border-radius: 8px; border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-ghost { background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { background: #f0f2f5; color: var(--text); }
+.btn-block { width: 100%; }
+.btn-sm { height: 30px; padding: 0 12px; font-size: 13px; }
+
+/* 命令按钮 */
+.cmd {
+    height: 34px; border: none; border-radius: 8px; color: #fff; font-weight: 600;
+    font-size: 12.5px; padding: 0 12px; cursor: pointer; transition: all .15s;
+}
+.cmd:hover { opacity: .9; transform: translateY(-1px); }
+.cmd-system { background: var(--success); }
+.cmd-channel { background: var(--primary); }
+.cmd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* Radio 胶囊 */
+.radio-group { display: flex; gap: 8px; margin-bottom: 10px; }
+.radio-pill {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 7px 10px; border: 1px solid var(--border); border-radius: 20px;
+    font-size: 13px; color: var(--text-muted); cursor: pointer; transition: all .15s; user-select: none;
+}
+.radio-pill input { accent-color: var(--primary); margin: 0; }
+.radio-pill:has(input:checked) { background: #e7f1ff; border-color: var(--primary); color: var(--primary); font-weight: 600; }
+
+/* ============ 终端主区 ============ */
+.terminal-pane {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column;
+    overflow: hidden;
+}
+.terminal-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-bottom: 1px solid var(--border); background: #fafbfc;
+}
+.terminal-title { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+.terminal-actions { display: flex; gap: 6px; }
+#log {
+    flex: 1; min-height: 420px; width: 100%; border: none; resize: none;
+    padding: 14px 16px; font-family: var(--mono); font-size: 13px; line-height: 1.55;
+    color: #24292f; background: #fcfcfd;
+}
+#log:focus { outline: none; }
+.sendbar { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); background: #fafbfc; }
+.sendbar #input { flex: 1; height: 36px; border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; font-size: 14px; }
+.sendbar #input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(13,110,253,.15); }
+
+/* ============ 深色主题 ============ */
+body.dark {
+    --bg: #1c1e21; --surface: #242526; --border: #3a3b3c;
+    --text: #e4e6eb; --text-muted: #b0b3b8;
+    --primary: #4f8cff; --primary-hover: #3b7bff;
+}
+body.dark .topbar, body.dark .terminal-bar, body.dark .sendbar { background: #2c2d2f; }
+body.dark #log { background: #1e1f20; color: #d8d9da; }
+body.dark .form-control { background: #2c2d2f; color: var(--text); }
+body.dark .icon-btn:hover, body.dark .btn-ghost:hover, body.dark .topnav a:hover { background: #3a3b3c; }
+
+
+/* ============ 电池电量卡片 ============ */
+.battery-card .battery-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+/* 电池图标外壳 */
+.battery-icon {
+    position: relative;
+    width: 48px;
+    height: 24px;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    background: transparent;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* 电池头部凸起 */
+.battery-icon::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 6px;
+    width: 4px;
+    height: 8px;
+    background: var(--text-muted);
+    border-radius: 0 2px 2px 0;
+}
+
+/* 电量填充条 */
+.battery-level {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+/* 电量百分比数字 */
+.battery-percent {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+/* 电量状态文字 */
+.battery-status {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* 不同电量区间的颜色 */
+.battery-level.high { background: #2e7d32; }      /* 绿色 - 60%以上 */
+.battery-level.medium { background: #f9a825; }    /* 黄色 - 20%~60% */
+.battery-level.low { background: #d32f2f; }       /* 红色 - 20%以下 */
+
+/* 深色主题适配 */
+body.dark .battery-icon {
+    border-color: #888;
+}
+body.dark .battery-icon::after {
+    background: #888;
+}

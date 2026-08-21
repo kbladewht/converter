@@ -129,18 +129,19 @@ body {
 }
 .terminal-bar {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; border-bottom: 1px solid var(--border); background: #fafbfc;
+    padding: 10px 14px; border-bottom: 1px solid var(--border); background: #292d34;
 }
 .terminal-title { font-size: 13px; font-weight: 600; color: var(--text-muted); }
 .terminal-actions { display: flex; gap: 6px; }
 #log {
     flex: 1; min-height: 420px; width: 100%; border: none; resize: none;
     padding: 14px 16px; font-family: var(--mono); font-size: 13px; line-height: 1.55;
-    color: #24292f; background: #fcfcfd;
+    color: #d8d9da; background: #15171b;
 }
 #log:focus { outline: none; }
-.sendbar { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); background: #fafbfc; }
-.sendbar #input { flex: 1; height: 36px; border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; font-size: 14px; }
+.sendbar { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); background: #292d34; }
+.sendbar #input { flex: 1; height: 36px; border: 1px solid #4a515b; border-radius: 8px; padding: 0 12px; font-size: 14px; background: #1b1e23; color: var(--text); }
+.sendbar #input::placeholder, #log::placeholder { color: #727985; }
 .sendbar #input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(13,110,253,.15); }
 
 /* ============ 深色主题 ============ */
@@ -150,7 +151,7 @@ body.dark {
     --primary: #343a42; --primary-hover: #444b55;
 }
 body.dark .topbar, body.dark .terminal-bar, body.dark .sendbar { background: #292d34; }
-body.dark #log { background: #1b1e23; color: #d8d9da; }
+body.dark #log { background: #15171b; color: #d8d9da; }
 body.dark .form-control { background: #292d34; color: var(--text); }
 body.dark .icon-btn:hover, body.dark .btn-ghost:hover, body.dark .topnav a:hover { background: #3a4049; }
 
